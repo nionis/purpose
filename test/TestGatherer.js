@@ -249,7 +249,7 @@ contract("Gatherer", function(accounts) {
   });
 
   it("gatherFor: 10 years, 0.0000001%", async function() {
-    const seconds = duration.years(1);
+    const seconds = duration.years(10);
     const perwei = web3.toWei(0.000001, "ether");
 
     await gatherer.allow(user1, taxer1, perwei);
