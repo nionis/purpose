@@ -6,7 +6,7 @@ const Purpose = artifacts.require("Purpose");
 const Burner = artifacts.require("Burner");
 
 contract("Burner", function(accounts) {
-  const [owner] = accounts;
+  const [owner, user1] = accounts;
   const supplier = owner;
   const burnPerweiYearly = web3.toWei(0.2, "ether");
   let purpose;
@@ -45,6 +45,18 @@ contract("Burner", function(accounts) {
 
   it("after 1 minute no burn", async function() {
     const seconds = duration.minutes(1);
+    const balance = await purpose.balanceOf(supplier);
+
+    await increaseTime(seconds);
+    const burnable = await burner.burnable();
+
+    isSecondsAcurrateEnough(seconds, balance, burnable);
+  });
+
+  it("after 1 minute, 1 prps left no burn", async function() {
+    const seconds = duration.minutes(1);
+    const balanceToRemove = new web3.BigNumber(1e27).minus(1e18);
+    await purpose.transfer(user1, balanceToRemove);
     const balance = await purpose.balanceOf(supplier);
 
     await increaseTime(seconds);
