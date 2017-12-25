@@ -12,12 +12,13 @@ contract Burner {
   uint256 public start;
   uint256 public lastBurn;
   uint256 public burnPerweiYearly;
+  uint256 constant public MAXPERWEI = 1 ether;
 
   function Burner (address _purpose, address _supplier, uint256 _start, uint256 _burnPerweiYearly) {
     require(_purpose != address(0));
     require(_supplier != address(0));
     require(_start > 0);
-    require(_burnPerweiYearly > 0);
+    require(_burnPerweiYearly > 0 && _burnPerweiYearly <= MAXPERWEI);
 
     purpose = Purpose(_purpose);
     supplier = _supplier;
@@ -47,7 +48,7 @@ contract Burner {
     // balance of supplier
     uint256 balance = purpose.balanceOf(supplier);
     // how much purpose to burn
-    uint256 amount = balance.mul(perweiToBurn).div(1 ether);
+    uint256 amount = balance.mul(perweiToBurn).div(MAXPERWEI);
 
     // return how much would be burned
     if (amount > balance) {

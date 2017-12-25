@@ -8,7 +8,7 @@ const Gatherer = artifacts.require("./Gatherer.sol");
 const Crowdsale = artifacts.require("./Crowdsale.sol");
 
 const getNow = () => web3.eth.getBlock("latest").timestamp;
-const burnPercentYearly = 20; // 20% per year
+const burnPerweiYearly = web3.toWei(0.2, "ether"); // 20% per year
 const crowdsaleRate = 6; // ~100$ of ether (24/12/17)
 const gathererRate = 1268391679;
 
@@ -28,7 +28,7 @@ const start = async (deployer, network, accounts) => {
     Purpose.address,
     atheneAddr,
     getNow(),
-    burnPercentYearly
+    burnPerweiYearly
   );
 
   // --> deploy hodler
