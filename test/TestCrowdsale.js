@@ -54,6 +54,14 @@ contract("Crowdsale", function(accounts) {
     );
   });
 
+  it("change rate", async function() {
+    await expectThrow(
+      crowdsale.setRate(purposeWeiRate1, etherWeiRate2, {
+        from: investor
+      })
+    );
+  });
+
   it("sendTransaction rate 6/1", async function() {
     await crowdsale.sendTransaction({
       from: investor,
