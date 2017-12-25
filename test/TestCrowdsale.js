@@ -73,4 +73,38 @@ contract("Crowdsale", function(accounts) {
     const tokenBalanceAfter = await purpose.balanceOf(investor);
     assert.isTrue(tokenBalanceAfter.equals(estimate));
   });
+
+  it("buy rate 1, 1 wei", async function() {
+    const buyAmount = new web3.BigNumber(1);
+
+    await crowdsale.setRate(rate1);
+
+    await crowdsale.buyTokens(investor, {
+      from: investor,
+      value: buyAmount
+    });
+
+    const estimate = buyAmount.times(rate1).round();
+    const tokenBalanceAfter = await purpose.balanceOf(investor);
+
+    assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(tokenBalanceAfter.equals(6));
+  });
+
+  it("buy rate 1, 1e10 wei", async function() {
+    const buyAmount = new web3.BigNumber(1e10);
+
+    await crowdsale.setRate(rate1);
+
+    await crowdsale.buyTokens(investor, {
+      from: investor,
+      value: buyAmount
+    });
+
+    const estimate = buyAmount.times(rate1).round();
+    const tokenBalanceAfter = await purpose.balanceOf(investor);
+
+    assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(tokenBalanceAfter.equals(6e10));
+  });
 });
