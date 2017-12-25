@@ -17,8 +17,9 @@ contract Crowdsale is Ownable, Pausable {
   // address where funds are collected
   address public wallet;
 
-  // rate (purpose wei per eth wei)
-  uint256 public rate;
+  // rate 6/1 (6 token uints for 1 wei)
+  uint256 public purposeWeiRate = 6;
+  uint256 public etherWeiRate = 1;
 
   // amount of raised wei
   uint256 public weiRaised = 0;
@@ -35,13 +36,13 @@ contract Crowdsale is Ownable, Pausable {
    */
   event TokenPurchase(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 amount);
 
-  function Crowdsale(address _wallet, address _token, uint256 _rate, address _owner) {
+  function Crowdsale(address _wallet, address _token, uint256 _purposeWeiRate, uint256 _etherWeiRate, address _owner) {
     require(_wallet != address(0));
     require(_token != address(0));
 
     wallet = _wallet;
     token = ERC20(_token);
-    setRate(_rate);
+    setRate(_purposeWeiRate, _etherWeiRate);
     owner = _owner;
   }
 
@@ -51,10 +52,12 @@ contract Crowdsale is Ownable, Pausable {
   }
 
   // change rate
-  function setRate(uint256 _rate) public onlyOwner {
-    require(_rate > 0);
+  function setRate(uint256 _purposeWeiRate, uint256 _etherWeiRate) public onlyOwner {
+    require(_purposeWeiRate > 0);
+    require(_etherWeiRate > 0);
     
-    rate = _rate;
+    purposeWeiRate = _purposeWeiRate;
+    etherWeiRate = _etherWeiRate;
   }
 
   // low level token purchase function
@@ -65,7 +68,7 @@ contract Crowdsale is Ownable, Pausable {
     uint256 weiAmount = msg.value;
 
     // calculate token amount to be created
-    uint256 tokens = weiAmount.mul(rate);
+    uint256 tokens = weiAmount.div(etherWeiRate).mul(purposeWeiRate);
 
     // update state
     weiRaised = weiRaised.add(weiAmount);
