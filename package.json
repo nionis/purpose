@@ -1,0 +1,15 @@
+{
+  "name": "purpose",
+  "version": "1.0.0",
+  "description": "Purpose, UBI, and related contracts",
+  "scripts": {
+    "test": "truffle test --reset --compile-all"
+  },
+  "dependencies": {
+    "truffle": "^4.0.4",
+    "zeppelin-solidity": "^1.5.0"
+  },
+  "engines": {
+    "node": ">=8.5.0"
+  }
+}
