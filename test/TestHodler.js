@@ -64,7 +64,7 @@ contract("Hodler", function(accounts) {
     await expectThrow(hodler.hodl(id, purposeInput, months));
   });
 
-  it("amounts", async function() {
+  it("amounts, 3 months", async function() {
     const id = randomId();
     const months = 3;
 
@@ -84,7 +84,53 @@ contract("Hodler", function(accounts) {
     assert.isTrue(
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
-    isMonthsAcurrateEnough(3, ubiBalanceAfter, purposeInput);
+    isMonthsAcurrateEnough(months, ubiBalanceAfter, purposeInput);
+  });
+
+  it("amounts, 6 months", async function() {
+    const id = randomId();
+    const months = 6;
+
+    const prpsBalanceBefore = await purpose.balanceOf(owner);
+    const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
+    const ubiBalanceBefore = await ubi.balanceOf(owner);
+
+    await hodler.hodl(id, purposeInput, months);
+
+    const prpsBalanceAfter = await purpose.balanceOf(owner);
+    const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
+    const ubiBalanceAfter = await ubi.balanceOf(owner);
+
+    assert.isTrue(
+      prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
+    );
+    assert.isTrue(
+      prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
+    );
+    isMonthsAcurrateEnough(months, ubiBalanceAfter, purposeInput);
+  });
+
+  it("amounts, 12 months", async function() {
+    const id = randomId();
+    const months = 12;
+
+    const prpsBalanceBefore = await purpose.balanceOf(owner);
+    const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
+    const ubiBalanceBefore = await ubi.balanceOf(owner);
+
+    await hodler.hodl(id, purposeInput, months);
+
+    const prpsBalanceAfter = await purpose.balanceOf(owner);
+    const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
+    const ubiBalanceAfter = await ubi.balanceOf(owner);
+
+    assert.isTrue(
+      prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
+    );
+    assert.isTrue(
+      prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
+    );
+    isMonthsAcurrateEnough(months, ubiBalanceAfter, purposeInput);
   });
 
   it("getItem", async function() {
