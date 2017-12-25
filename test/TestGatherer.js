@@ -19,10 +19,10 @@ contract("Gatherer", function(accounts) {
     const seconds = new web3.BigNumber(minted).div(gathererRate);
     return seconds;
   };
-  const calcTax = (minted, percent) => {
+  const calcTax = (minted, perwei) => {
     const tax = new web3.BigNumber(minted)
-      .times(percent)
-      .div(100)
+      .times(perwei)
+      .div(1e18)
       .round();
     return tax;
   };
@@ -130,7 +130,7 @@ contract("Gatherer", function(accounts) {
     const taxerUbi = await ubi.balanceOf(taxer1);
 
     const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, 50);
+    const taxerUbiEst = calcTax(minted, taxPerwei50);
 
     isSecondsAccurateEnough(seconds / 2, user1Ubi);
     isSecondsAccurateEnough(seconds / 2, taxerUbi);
@@ -155,7 +155,7 @@ contract("Gatherer", function(accounts) {
     const taxerUbi = await ubi.balanceOf(taxer1);
 
     const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, 100);
+    const taxerUbiEst = calcTax(minted, taxPerwei100);
 
     assert.isTrue(user1Ubi.equals(0));
     isSecondsAccurateEnough(seconds * 2, user1Ubi.plus(taxerUbi));
@@ -231,12 +231,8 @@ contract("Gatherer", function(accounts) {
   it("gatherFor: 1 minute, 0.005%", async function() {
     const seconds = duration.minutes(1);
 
-    const percent = "0.005";
-    const percentWei = web3.toWei(
-      new web3.BigNumber(percent).div(100),
-      "ether"
-    );
-    await gatherer.allow(user1, taxer1, percentWei);
+    const perwei = web3.toWei(0.05, "ether");
+    await gatherer.allow(user1, taxer1, perwei);
 
     await increaseTime(seconds);
 
@@ -246,7 +242,7 @@ contract("Gatherer", function(accounts) {
     const taxerUbi = await ubi.balanceOf(taxer1);
 
     const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, percent);
+    const taxerUbiEst = calcTax(minted, perwei);
 
     isSecondsAccurateEnough(seconds, user1Ubi.plus(taxerUbi));
     assert.isTrue(taxerUbi.equals(taxerUbiEst));
@@ -254,13 +250,9 @@ contract("Gatherer", function(accounts) {
 
   it("gatherFor: 10 years, 0.0000001%", async function() {
     const seconds = duration.years(1);
+    const perwei = web3.toWei(0.000001, "ether");
 
-    const percent = "0.0000001";
-    const percentWei = web3.toWei(
-      new web3.BigNumber(percent).div(100),
-      "ether"
-    );
-    await gatherer.allow(user1, taxer1, percentWei);
+    await gatherer.allow(user1, taxer1, perwei);
 
     await increaseTime(seconds);
 
@@ -270,7 +262,7 @@ contract("Gatherer", function(accounts) {
     const taxerUbi = await ubi.balanceOf(taxer1);
 
     const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, percent);
+    const taxerUbiEst = calcTax(minted, perwei);
 
     isSecondsAccurateEnough(seconds, minted);
     assert.isTrue(taxerUbi.equals(taxerUbiEst));
