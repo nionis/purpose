@@ -43,6 +43,28 @@ contract("Burner", function(accounts) {
     await purpose.adminAddRole(burner.address, "burn");
   });
 
+  it("after 1 seconds no burn", async function() {
+    const seconds = 1;
+    const balance = await purpose.balanceOf(supplier);
+
+    await increaseTime(seconds);
+    const burnable = await burner.burnable();
+
+    isSecondsAcurrateEnough(seconds, balance, burnable);
+  });
+
+  it("after 1 seconds, 1 prps left no burn", async function() {
+    const seconds = 1;
+    const balanceToRemove = new web3.BigNumber(1e27).minus(1e18);
+    await purpose.transfer(user1, balanceToRemove);
+    const balance = await purpose.balanceOf(supplier);
+
+    await increaseTime(seconds);
+    const burnable = await burner.burnable();
+
+    isSecondsAcurrateEnough(seconds, balance, burnable);
+  });
+
   it("after 1 minute no burn", async function() {
     const seconds = duration.minutes(1);
     const balance = await purpose.balanceOf(supplier);
