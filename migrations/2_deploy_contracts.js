@@ -52,7 +52,7 @@ const start = async (deployer, network, accounts) => {
   await purpose.adminRemoveRole(owner, "admin");
   await ubi.adminRemoveRole(owner, "admin");
   // add new admin and remove previous
-  await gatherer.adminAddRole(addresses.athene, "admin"); // reese or athene
+  await gatherer.adminAddRole(addresses.athene, "admin");
   await gatherer.adminRemoveRole(owner, "admin");
 
   // --> crowdsale
@@ -64,9 +64,11 @@ const start = async (deployer, network, accounts) => {
     etherWeiRate,
     addresses.athene
   );
-  // allow crowdsale to transfer from supplier
-  const balanceOfAthene = await purpose.balanceOf(addresses.athene);
-  await purpose.approve(crowdsale.address, balanceOfAthene);
+  // allow crowdsale to transfer from supplier (will be called by athene)
+  // const balanceOfAthene = await purpose.balanceOf(addresses.athene);
+  // await purpose.approve(crowdsale.address, balanceOfAthene, {
+  //   from: addresses.athene
+  // });
 };
 
 module.exports = (deployer, network, accounts) => {
