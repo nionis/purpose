@@ -60,7 +60,7 @@ contract Gatherer is RBAC {
     gatherFor(msg.sender);
   }
 
-  function gatherForMutli(address[] _users) external {
+  function gatherForMulti(address[] _users) external {
     uint256 i = 0;
     while (i < _users.length) {
       gatherFor(_users[i]);

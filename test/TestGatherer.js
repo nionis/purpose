@@ -188,7 +188,7 @@ contract("Gatherer", function(accounts) {
 
     const ubiBalanceBefore1 = await ubi.balanceOf(user1);
     const ubiBalanceBefore2 = await ubi.balanceOf(user1);
-    await gatherer.gatherForMutli([user1, user2]);
+    await gatherer.gatherForMulti([user1, user2]);
     const ubiBalanceAfter1 = await ubi.balanceOf(user1);
     const ubiBalanceAfter2 = await ubi.balanceOf(user1);
 
