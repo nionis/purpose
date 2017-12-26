@@ -8,7 +8,7 @@ const Hodler = artifacts.require("./Hodler.sol");
 const Gatherer = artifacts.require("./Gatherer.sol");
 const Crowdsale = artifacts.require("./Crowdsale.sol");
 
-const burnStart = +new Date() / 3;
+const burnStart = +new Date() / 1e3;
 const burnPerweiYearly = web3.toWei(0.2, "ether"); // 20% per year
 const purposeWeiRate = 6; // ~100$ of ether (24/12/17)
 const etherWeiRate = 1; // 6/1
