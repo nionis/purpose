@@ -1,4 +1,5 @@
 const Deploy = require("./helpers/Deploy");
+const { addresses } = require("../keys");
 
 const Purpose = artifacts.require("./Purpose.sol");
 const Ubi = artifacts.require("./Ubi.sol");
@@ -7,7 +8,7 @@ const Hodler = artifacts.require("./Hodler.sol");
 const Gatherer = artifacts.require("./Gatherer.sol");
 const Crowdsale = artifacts.require("./Crowdsale.sol");
 
-const getNow = () => web3.eth.getBlock("latest").timestamp;
+const burnStart = +new Date() / 3;
 const burnPerweiYearly = web3.toWei(0.2, "ether"); // 20% per year
 const purposeWeiRate = 6; // ~100$ of ether (24/12/17)
 const etherWeiRate = 1; // 6/1
@@ -15,10 +16,10 @@ const gathererRate = 1268391679;
 
 const start = async (deployer, network, accounts) => {
   const deploy = Deploy(deployer);
-  const [owner, atheneAddr, atheneAddrWallet] = accounts;
+  const [owner] = accounts;
 
   // --> deploy purpose
-  const purpose = await deploy(Purpose, atheneAddr);
+  const purpose = await deploy(Purpose, addresses.athene);
 
   // --> deploy ubi
   const ubi = await deploy(Ubi);
@@ -27,8 +28,8 @@ const start = async (deployer, network, accounts) => {
   const burner = await deploy(
     Burner,
     Purpose.address,
-    atheneAddr,
-    getNow(),
+    addresses.athene,
+    burnStart,
     burnPerweiYearly
   );
 
@@ -51,25 +52,25 @@ const start = async (deployer, network, accounts) => {
   await purpose.adminRemoveRole(owner, "admin");
   await ubi.adminRemoveRole(owner, "admin");
   // add new admin and remove previous
-  await gatherer.adminAddRole(atheneAddr, "admin"); // reese or athene
+  await gatherer.adminAddRole(addresses.athene, "admin"); // reese or athene
   await gatherer.adminRemoveRole(owner, "admin");
 
   // --> crowdsale
   const crowdsale = await deploy(
     Crowdsale,
-    atheneAddrWallet,
+    addresses.atheneWallet,
     purpose.address,
     purposeWeiRate,
     etherWeiRate,
-    atheneAddr
+    addresses.athene
   );
   // allow crowdsale to transfer from supplier
-  const balanceOfAthene = await purpose.balanceOf(atheneAddr);
+  const balanceOfAthene = await purpose.balanceOf(addresses.athene);
   await purpose.approve(crowdsale.address, balanceOfAthene);
 };
 
 module.exports = (deployer, network, accounts) => {
-  if (network === "test") return;
+  if (network === "develop") return;
 
   return start(deployer, network, accounts);
 };

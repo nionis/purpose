@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Purpose, UBI, and related contracts",
   "scripts": {
-    "test": "truffle test --reset --compile-all"
+    "test": "npx truffle develop"
   },
   "dependencies": {
     "truffle": "^4.0.4",
+    "truffle-hdwallet-provider": "0.0.3",
     "zeppelin-solidity": "^1.5.0"
   },
   "engines": {
