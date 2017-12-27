@@ -142,7 +142,7 @@ contract("Hodler", function(accounts) {
 
     await hodler.hodl(id, purposeInput, months);
 
-    const itemRes = await hodler.getItem(id);
+    const itemRes = await hodler.getItem(owner, id);
     const [_id, beneficiary, value, _releaseTime, fulfilled] = itemRes;
 
     assert.isTrue(_id.equals(id));
@@ -191,7 +191,7 @@ contract("Hodler", function(accounts) {
     );
 
     // item check
-    const itemRes = await hodler.getItem(id);
+    const itemRes = await hodler.getItem(owner, id);
     const [_id, beneficiary, value, _releaseTime, fulfilled] = itemRes;
 
     assert.isTrue(_id.equals(id));

@@ -93,8 +93,8 @@ contract Hodler {
     purpose.safeTransfer(item.beneficiary, item.value);
   }
 
-  function getItem(uint256 _id) view returns (uint256, address, uint256, uint256, bool) {
-    Item item = items[msg.sender][_id];
+  function getItem(address _user, uint256 _id) view returns (uint256, address, uint256, uint256, bool) {
+    Item item = items[_user][_id];
 
     return (
       item.id,
