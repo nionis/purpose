@@ -51,9 +51,7 @@ contract Burner {
     uint256 amount = balance.mul(perweiToBurn).div(MAXPERWEI);
 
     // return how much would be burned
-    if (amount > balance) {
-      return balance;
-    }
+    if (amount > balance) return balance;
     return amount;
   }
 }

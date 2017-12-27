@@ -59,11 +59,11 @@ contract Hodler {
     // make sure ubi doesnt exist already
     require(item.id != _id);
 
-    // transfer tokens to hodler
-    assert(purpose.hodlerTransfer(msg.sender, _value));
-
     // update state
     items[msg.sender][_id] = Item(_id, msg.sender, _value, _releaseTime, false);
+
+    // transfer tokens to hodler
+    assert(purpose.hodlerTransfer(msg.sender, _value));
 
     // mint tokens for user
     assert(ubi.mintUbi(msg.sender, ubiAmount));

@@ -72,6 +72,35 @@ contract("Gatherer", function(accounts) {
     await expectThrow(gatherer.disallow(user1));
   });
 
+  it("mintable when not allowed", async function() {
+    const mintable = await gatherer.mintable(user1);
+
+    assert.isTrue(mintable.equals(0));
+  });
+
+  it("mintable after 1 day", async function() {
+    const seconds = duration.days(1);
+
+    await gatherer.allow(user1, zeroAddr, 0);
+
+    await increaseTime(seconds);
+
+    const mintable = await gatherer.mintable(user1);
+
+    isSecondsAccurateEnough(seconds, mintable);
+  });
+
+  it("gather when not allowed", async function() {
+    const user1UbiBefore = await ubi.balanceOf(user1);
+
+    await gatherer.gatherFor(user1);
+
+    const user1UbiAfter = await ubi.balanceOf(user1);
+
+    assert.isTrue(user1UbiBefore.equals(user1UbiAfter));
+    assert.isTrue(user1UbiAfter.equals(0));
+  });
+
   it("change rate falsy", async function() {
     const belowMinRate = gathererRate.div(100).minus(1);
     const aboveMaxRate = gathererRate.times(100).plus(1);

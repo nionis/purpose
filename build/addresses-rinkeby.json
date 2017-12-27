@@ -1,9 +1,9 @@
 {
-  "Migrations": "0xfe62d84ff6ec8118ce120fe18f82badea7a31500",
-  "Purpose": "0xefcafac2e99b9243dc002f99cbcb0104444d391f",
-  "Ubi": "0x0887d9b92df23076e3289b6eafea6c3130040d10",
-  "Burner": "0x04c83cc00f1d1dfcf72d45d61443cd999d6cc677",
-  "Hodler": "0x3056107b3703663cd8dbb7332842833667602e73",
-  "Gatherer": "0xc3e3c15b6d201ff1c63dcb525638ec92ca68d815",
-  "Crowdsale": "0x5bbb1e98c0265d1459e36e446e79453c15cc8984"
+  "Migrations": "0x954d7b0ac19129db6f1547413a4de9d6b3f27b11",
+  "Purpose": "0x069374d45013075d19eaa4a70274e974d2c4c961",
+  "Ubi": "0x4e5e95f89a7f7998c5470dfa34ed1f5ef35f864b",
+  "Burner": "0x6886a733d0bcf843a640f1420f3bcb36b6398c23",
+  "Hodler": "0x7a52c5f0482f1284ab645de78c0e5471ed119da2",
+  "Gatherer": "0x2a0f0d0bcec9d6e9a71f7130f37a5e8d13b3159e",
+  "Crowdsale": "0x40595088c7c308d1da3a1f3e4722ab369b252abd"
 }

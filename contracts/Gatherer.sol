@@ -33,6 +33,14 @@ contract Gatherer is RBAC {
   function disableCanChangeRate() external onlyAdmin {
     canChangeRate = false;
   }
+
+  // change the rate in which ubi is minted
+  function changeRate(uint256 _rate) public onlyAdmin {
+    require(_rate >= 12683916 && _rate <= 126839167900);
+    require(canChangeRate);
+
+    rate = _rate;
+  }
   
   // allow user to gather ubi
   function allow(address _user, address _taxReceiver, uint256 _taxPerwei) external onlyAdmin {
@@ -56,25 +64,7 @@ contract Gatherer is RBAC {
     item.allowed = false;
   }
 
-  function gather() external {
-    gatherFor(msg.sender);
-  }
-
-  function gatherForMulti(address[] _users) external {
-    uint256 i = 0;
-    while (i < _users.length) {
-      gatherFor(_users[i]);
-      i++;
-    }
-  }
-
-  function changeRate(uint256 _rate) public onlyAdmin {
-    require(_rate >= 12683916 && _rate <= 126839167900);
-    require(canChangeRate);
-
-    rate = _rate;
-  }
-
+  // change user's tax
   function changeTax(address _user, address _taxReceiver, uint256 _taxPerwei) public onlyAdmin {
     require(_user != address(0));
     require(_taxPerwei >= 0 && _taxPerwei <= MAXPERWEI);
@@ -85,21 +75,45 @@ contract Gatherer is RBAC {
     item.taxPerwei = _taxPerwei;
   }
 
+  // returns true if user is allowed to gather
   function isAllowed(address _user) public view returns (bool) {
     return items[_user].allowed;
   }
 
-  function gatherFor(address _user) public {
-    require(_user != address(0));
-
+  // returns user's item
+  function getItem(address _user) public view returns (bool, uint256, address, uint256) {
     Item item = items[_user];
-    require(item.allowed);
-    require(item.lastGather < now);
+
+    return (
+      item.allowed,
+      item.lastGather,
+      item.taxReceiver,
+      item.taxPerwei
+    );
+  }
+
+  // returns total amount that will be minted
+  function mintable(address _user) public view returns (uint256) {
+    Item item = items[_user];
+
+    if (!item.allowed) return 0;
+    if (item.lastGather >= now) return 0;
 
     // get seconds difference from lastGather
     uint256 secsDiff = now.sub(item.lastGather);
-    // get amount of UBI for user
-    uint256 userAmount = secsDiff.mul(rate);
+    // get amount to mint
+    uint256 amount = secsDiff.mul(rate);
+
+    return amount;
+  }
+
+  // gathers (mints) ubi
+  function gatherFor(address _user) public {
+    require(_user != address(0));
+ 
+    // get total mint amount
+    Item item = items[_user];
+    uint256 userAmount = mintable(_user);
     uint256 taxAmount = 0;
 
     // calculate tax amount and update amounts
@@ -111,12 +125,27 @@ contract Gatherer is RBAC {
     // update state
     item.lastGather = now;
 
+    // mint ubi
     if (userAmount > 0) {
       assert(ubi.mintUbi(_user, userAmount));
     }
     
     if (taxAmount > 0) {
       assert(ubi.mintUbi(item.taxReceiver, taxAmount));  
+    }
+  }
+
+  // gatherFor sender
+  function gather() external {
+    gatherFor(msg.sender);
+  }
+
+  // input accepts an array of users and then calls gatherFor
+  function gatherForMulti(address[] _users) external {
+    uint256 i = 0;
+    while (i < _users.length) {
+      gatherFor(_users[i]);
+      i++;
     }
   }
 }
