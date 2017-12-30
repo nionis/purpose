@@ -38,6 +38,8 @@ contract Hodler {
     // only 3 types are allowed
     require(_months == 3 || _months == 6 || _months == 12);
 
+    address _user = msg.sender;
+
     // turn months to seconds
     uint256 _seconds = _months.mul(2628000);
     // get release time
@@ -50,30 +52,32 @@ contract Hodler {
     uint256 ubiAmount = _value.mul(percentage).div(100);
 
     // check if user has enough balance
-    uint256 balance = purpose.balanceOf(msg.sender);
+    uint256 balance = purpose.balanceOf(_user);
     require(balance >= _value);
 
       // get ubi item
-    Item item = items[msg.sender][_id];
+    Item item = items[_user][_id];
 
     // make sure ubi doesnt exist already
     require(item.id != _id);
 
     // update state
-    items[msg.sender][_id] = Item(_id, msg.sender, _value, _releaseTime, false);
+    items[_user][_id] = Item(_id, _user, _value, _releaseTime, false);
 
     // transfer tokens to hodler
-    assert(purpose.hodlerTransfer(msg.sender, _value));
+    assert(purpose.hodlerTransfer(_user, _value));
 
     // mint tokens for user
-    assert(ubi.mintUbi(msg.sender, ubiAmount));
+    assert(ubi.mintUbi(_user, ubiAmount));
   }
 
   function release(uint256 _id) external {
     require(_id > 0);
 
+    address _user = msg.sender;
+
     // get item
-    Item item = items[msg.sender][_id];
+    Item item = items[_user][_id];
 
     // check if it exists
     require(item.id == _id);
