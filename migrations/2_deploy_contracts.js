@@ -2,7 +2,7 @@ const Deploy = require("./helpers/Deploy");
 const { addresses } = require("../keys");
 
 const Purpose = artifacts.require("./Purpose.sol");
-const Ubi = artifacts.require("./Ubi.sol");
+const DUBI = artifacts.require("./DUBI.sol");
 const Burner = artifacts.require("./Burner.sol");
 const Hodler = artifacts.require("./Hodler.sol");
 const Gatherer = artifacts.require("./Gatherer.sol");
@@ -21,8 +21,8 @@ const start = async (deployer, network, accounts) => {
   // --> deploy purpose
   const purpose = await deploy(Purpose, addresses.athene);
 
-  // --> deploy ubi
-  const ubi = await deploy(Ubi);
+  // --> deploy dubi
+  const dubi = await deploy(DUBI);
 
   // --> deploy burner
   const burner = await deploy(
@@ -34,23 +34,23 @@ const start = async (deployer, network, accounts) => {
   );
 
   // --> deploy hodler
-  const hodler = await deploy(Hodler, purpose.address, ubi.address);
+  const hodler = await deploy(Hodler, purpose.address, dubi.address);
 
   // --> deploy gatherer
-  const gatherer = await deploy(Gatherer, ubi.address, gathererRate);
+  const gatherer = await deploy(Gatherer, dubi.address, gathererRate);
 
   // -> RBAC
   // allow burner to burn purpose
   await purpose.adminAddRole(burner.address, "burn");
   // allow hodler to hodl purpose
   await purpose.adminAddRole(hodler.address, "transfer");
-  // allow hodler to mint ubi
-  await ubi.adminAddRole(hodler.address, "mint");
-  // allow gatherer to mint ubi
-  await ubi.adminAddRole(gatherer.address, "mint");
+  // allow hodler to mint dubi
+  await dubi.adminAddRole(hodler.address, "mint");
+  // allow gatherer to mint dubi
+  await dubi.adminAddRole(gatherer.address, "mint");
   // disallow admin to change roles
   await purpose.adminRemoveRole(owner, "admin");
-  await ubi.adminRemoveRole(owner, "admin");
+  await dubi.adminRemoveRole(owner, "admin");
   // add new admin and remove previous
   await gatherer.adminAddRole(addresses.athene, "admin");
   await gatherer.adminRemoveRole(owner, "admin");
@@ -72,7 +72,7 @@ const start = async (deployer, network, accounts) => {
 };
 
 module.exports = (deployer, network, accounts) => {
-  if (network === "develop") return;
+  // if (network === "develop") return;
 
   return start(deployer, network, accounts);
 };

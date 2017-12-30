@@ -3,16 +3,16 @@ pragma solidity 0.4.18;
 import "zeppelin-solidity/contracts/token/SafeERC20.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "./Purpose.sol";
-import "./Ubi.sol";
+import "./DUBI.sol";
 
 
 contract Hodler {
   using SafeMath for uint256;
   using SafeERC20 for Purpose;
-  using SafeERC20 for Ubi;
+  using SafeERC20 for DUBI;
 
   Purpose public purpose;
-  Ubi public ubi;
+  DUBI public dubi;
 
   struct Item {
     uint256 id;
@@ -24,12 +24,12 @@ contract Hodler {
 
   mapping(address => mapping(uint256 => Item)) private items;
 
-  function Hodler(address _purpose, address _ubi) {
+  function Hodler(address _purpose, address _dubi) {
     require(_purpose != address(0));
-    require(_ubi != address(0));
+    require(_dubi != address(0));
 
     purpose = Purpose(_purpose);
-    ubi = Ubi(_ubi);
+    dubi = DUBI(_dubi);
   }
 
   function hodl(uint256 _id, uint256 _value, uint256 _months) external {
@@ -48,17 +48,17 @@ contract Hodler {
 
     // calculate percentage to mint: 3 months = 1% => _months / 3 = x
     uint256 percentage = _months.div(3);
-    // get ubi amount: => (_value * percentage) / 100
-    uint256 ubiAmount = _value.mul(percentage).div(100);
+    // get dubi amount: => (_value * percentage) / 100
+    uint256 dubiAmount = _value.mul(percentage).div(100);
 
     // check if user has enough balance
     uint256 balance = purpose.balanceOf(_user);
     require(balance >= _value);
 
-      // get ubi item
+      // get dubi item
     Item item = items[_user][_id];
 
-    // make sure ubi doesnt exist already
+    // make sure dubi doesnt exist already
     require(item.id != _id);
 
     // update state
@@ -68,7 +68,7 @@ contract Hodler {
     assert(purpose.hodlerTransfer(_user, _value));
 
     // mint tokens for user
-    assert(ubi.mintUbi(_user, ubiAmount));
+    assert(dubi.mint(_user, dubiAmount));
   }
 
   function release(uint256 _id) external {

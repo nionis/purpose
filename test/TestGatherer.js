@@ -2,7 +2,7 @@ const { increaseTime, duration } = require("./helpers/increaseTime");
 const latestTime = require("./helpers/latestTime");
 const expectThrow = require("./helpers/expectThrow");
 const AccurateEnough = require("./helpers/AccurateEnough");
-const Ubi = artifacts.require("Ubi");
+const DUBI = artifacts.require("DUBI");
 const Gatherer = artifacts.require("Gatherer");
 
 contract("Gatherer", function(accounts) {
@@ -11,7 +11,7 @@ contract("Gatherer", function(accounts) {
   const taxPerwei50 = new web3.BigNumber(web3.toWei(0.5, "ether"));
   const taxPerwei100 = new web3.BigNumber(web3.toWei(1, "ether"));
   const gathererRate = new web3.BigNumber("1268391679");
-  let ubi;
+  let dubi;
   let gatherer;
 
   const accurateSeconds = AccurateEnough(60);
@@ -34,10 +34,10 @@ contract("Gatherer", function(accounts) {
   };
 
   beforeEach(async function() {
-    ubi = await Ubi.new();
-    gatherer = await Gatherer.new(ubi.address, gathererRate);
+    dubi = await DUBI.new();
+    gatherer = await Gatherer.new(dubi.address, gathererRate);
 
-    await ubi.adminAddRole(gatherer.address, "mint");
+    await dubi.adminAddRole(gatherer.address, "mint");
   });
 
   it("initial", async function() {
@@ -91,14 +91,14 @@ contract("Gatherer", function(accounts) {
   });
 
   it("gather when not allowed", async function() {
-    const user1UbiBefore = await ubi.balanceOf(user1);
+    const user1DubiBefore = await dubi.balanceOf(user1);
 
     await gatherer.gatherFor(user1);
 
-    const user1UbiAfter = await ubi.balanceOf(user1);
+    const user1DubiAfter = await dubi.balanceOf(user1);
 
-    assert.isTrue(user1UbiBefore.equals(user1UbiAfter));
-    assert.isTrue(user1UbiAfter.equals(0));
+    assert.isTrue(user1DubiBefore.equals(user1DubiAfter));
+    assert.isTrue(user1DubiAfter.equals(0));
   });
 
   it("change rate falsy", async function() {
@@ -139,11 +139,11 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(zeroAddr);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(zeroAddr);
 
-    isSecondsAccurateEnough(seconds, user1Ubi.plus(taxerUbi));
-    assert.isTrue(taxerUbi.equals(0));
+    isSecondsAccurateEnough(seconds, user1Dubi.plus(taxerDubi));
+    assert.isTrue(taxerDubi.equals(0));
   });
 
   it("gatherFor tax 50%", async function() {
@@ -155,16 +155,16 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(taxer1);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(taxer1);
 
-    const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, taxPerwei50);
+    const minted = user1Dubi.plus(taxerDubi);
+    const taxerDubiEst = calcTax(minted, taxPerwei50);
 
-    isSecondsAccurateEnough(seconds / 2, user1Ubi);
-    isSecondsAccurateEnough(seconds / 2, taxerUbi);
+    isSecondsAccurateEnough(seconds / 2, user1Dubi);
+    isSecondsAccurateEnough(seconds / 2, taxerDubi);
     isSecondsAccurateEnough(seconds, minted);
-    assert.isTrue(taxerUbi.equals(taxerUbiEst));
+    assert.isTrue(taxerDubi.equals(taxerDubiEst));
   });
 
   it("gatherFor tax 50% change to 100%", async function() {
@@ -180,15 +180,15 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(taxer1);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(taxer1);
 
-    const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, taxPerwei100);
+    const minted = user1Dubi.plus(taxerDubi);
+    const taxerDubiEst = calcTax(minted, taxPerwei100);
 
-    assert.isTrue(user1Ubi.equals(0));
-    isSecondsAccurateEnough(seconds * 2, user1Ubi.plus(taxerUbi));
-    assert.isTrue(taxerUbi.equals(taxerUbiEst));
+    assert.isTrue(user1Dubi.equals(0));
+    isSecondsAccurateEnough(seconds * 2, user1Dubi.plus(taxerDubi));
+    assert.isTrue(taxerDubi.equals(taxerDubiEst));
   });
 
   it("gather", async function() {
@@ -202,11 +202,11 @@ contract("Gatherer", function(accounts) {
       from: user1
     });
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(zeroAddr);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(zeroAddr);
 
-    isSecondsAccurateEnough(seconds, user1Ubi.plus(taxerUbi));
-    assert.isTrue(taxerUbi.equals(0));
+    isSecondsAccurateEnough(seconds, user1Dubi.plus(taxerDubi));
+    assert.isTrue(taxerDubi.equals(0));
   });
 
   it("gatherForMulti", async function() {
@@ -215,14 +215,14 @@ contract("Gatherer", function(accounts) {
 
     await increaseTime(duration.days(1));
 
-    const ubiBalanceBefore1 = await ubi.balanceOf(user1);
-    const ubiBalanceBefore2 = await ubi.balanceOf(user1);
+    const dubiBalanceBefore1 = await dubi.balanceOf(user1);
+    const dubiBalanceBefore2 = await dubi.balanceOf(user1);
     await gatherer.gatherForMulti([user1, user2]);
-    const ubiBalanceAfter1 = await ubi.balanceOf(user1);
-    const ubiBalanceAfter2 = await ubi.balanceOf(user1);
+    const dubiBalanceAfter1 = await dubi.balanceOf(user1);
+    const dubiBalanceAfter2 = await dubi.balanceOf(user1);
 
-    assert.isTrue(ubiBalanceBefore1.lessThan(ubiBalanceAfter1));
-    assert.isTrue(ubiBalanceBefore2.lessThan(ubiBalanceAfter2));
+    assert.isTrue(dubiBalanceBefore1.lessThan(dubiBalanceAfter1));
+    assert.isTrue(dubiBalanceBefore2.lessThan(dubiBalanceAfter2));
   });
 
   it("gatherFor: 1 year", async function() {
@@ -234,11 +234,11 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(zeroAddr);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(zeroAddr);
 
-    isSecondsAccurateEnough(seconds, user1Ubi.plus(taxerUbi));
-    assert.isTrue(taxerUbi.equals(0));
+    isSecondsAccurateEnough(seconds, user1Dubi.plus(taxerDubi));
+    assert.isTrue(taxerDubi.equals(0));
   });
 
   it("gatherFor: 1 minute", async function() {
@@ -250,11 +250,11 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(zeroAddr);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(zeroAddr);
 
-    isSecondsAccurateEnough(seconds, user1Ubi.plus(taxerUbi));
-    assert.isTrue(taxerUbi.equals(0));
+    isSecondsAccurateEnough(seconds, user1Dubi.plus(taxerDubi));
+    assert.isTrue(taxerDubi.equals(0));
   });
 
   it("gatherFor: 1 minute, 0.005%", async function() {
@@ -267,14 +267,14 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(taxer1);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(taxer1);
 
-    const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, perwei);
+    const minted = user1Dubi.plus(taxerDubi);
+    const taxerDubiEst = calcTax(minted, perwei);
 
-    isSecondsAccurateEnough(seconds, user1Ubi.plus(taxerUbi));
-    assert.isTrue(taxerUbi.equals(taxerUbiEst));
+    isSecondsAccurateEnough(seconds, user1Dubi.plus(taxerDubi));
+    assert.isTrue(taxerDubi.equals(taxerDubiEst));
   });
 
   it("gatherFor: 10 years, 0.0000001%", async function() {
@@ -287,13 +287,13 @@ contract("Gatherer", function(accounts) {
 
     await gatherer.gatherFor(user1);
 
-    const user1Ubi = await ubi.balanceOf(user1);
-    const taxerUbi = await ubi.balanceOf(taxer1);
+    const user1Dubi = await dubi.balanceOf(user1);
+    const taxerDubi = await dubi.balanceOf(taxer1);
 
-    const minted = user1Ubi.plus(taxerUbi);
-    const taxerUbiEst = calcTax(minted, perwei);
+    const minted = user1Dubi.plus(taxerDubi);
+    const taxerDubiEst = calcTax(minted, perwei);
 
     isSecondsAccurateEnough(seconds, minted);
-    assert.isTrue(taxerUbi.equals(taxerUbiEst));
+    assert.isTrue(taxerDubi.equals(taxerDubiEst));
   });
 });

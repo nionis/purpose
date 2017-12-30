@@ -2,7 +2,7 @@ pragma solidity 0.4.18;
 
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "zeppelin-solidity/contracts/ownership/rbac/RBAC.sol";
-import "./Ubi.sol";
+import "./DUBI.sol";
 
 
 contract Gatherer is RBAC {
@@ -17,15 +17,15 @@ contract Gatherer is RBAC {
 
   mapping(address => Item) private items;
 
-  Ubi public ubi;
+  DUBI public dubi;
   uint256 public rate;
   bool public canChangeRate = true;
   uint256 constant public MAXPERWEI = 1 ether;
 
-  function Gatherer(address _ubi, uint256 _rate) {
-    require(_ubi != address(0));
+  function Gatherer(address _dubi, uint256 _rate) {
+    require(_dubi != address(0));
 
-    ubi = Ubi(_ubi);
+    dubi = DUBI(_dubi);
     changeRate(_rate);
   }
 
@@ -34,7 +34,7 @@ contract Gatherer is RBAC {
     canChangeRate = false;
   }
 
-  // change the rate in which ubi is minted
+  // change the rate in which dubi is minted
   function changeRate(uint256 _rate) public onlyAdmin {
     require(_rate >= 12683916 && _rate <= 126839167900);
     require(canChangeRate);
@@ -42,7 +42,7 @@ contract Gatherer is RBAC {
     rate = _rate;
   }
   
-  // allow user to gather ubi
+  // allow user to gather dubi
   function allow(address _user, address _taxReceiver, uint256 _taxPerwei) external onlyAdmin {
     require(_user != address(0));
 
@@ -54,7 +54,7 @@ contract Gatherer is RBAC {
     changeTax(_user, _taxReceiver, _taxPerwei);
   }
 
-  // disallow user from gathering ubi
+  // disallow user from gathering dubi
   function disallow(address _user) external onlyAdmin {
     require(_user != address(0));
 
@@ -107,7 +107,7 @@ contract Gatherer is RBAC {
     return amount;
   }
 
-  // gathers (mints) ubi
+  // gathers (mints) dubi
   function gatherFor(address _user) public {
     require(_user != address(0));
  
@@ -125,13 +125,13 @@ contract Gatherer is RBAC {
     // update state
     item.lastGather = now;
 
-    // mint ubi
+    // mint dubi
     if (userAmount > 0) {
-      assert(ubi.mintUbi(_user, userAmount));
+      assert(dubi.mint(_user, userAmount));
     }
     
     if (taxAmount > 0) {
-      assert(ubi.mintUbi(item.taxReceiver, taxAmount));  
+      assert(dubi.mint(item.taxReceiver, taxAmount));  
     }
   }
 
