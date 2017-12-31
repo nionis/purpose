@@ -72,7 +72,7 @@ const start = async (deployer, network, accounts) => {
 };
 
 module.exports = (deployer, network, accounts) => {
-  // if (network === "develop") return;
+  if (network === "develop") return;
 
   return start(deployer, network, accounts);
 };
