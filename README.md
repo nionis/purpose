@@ -5,11 +5,11 @@ This repository contains purpose related contracts developed by The Singularity 
 ## Contracts:
 
 * Purpose
-* Ubi
 * Burner
-* Hodler
-* Gatherer
 * Crowdsale
+* Ubi
+* Hodler
+* Gatherer (launching without it)
 
 ## Simple overview
 

@@ -212,4 +212,14 @@ contract("Hodler", function(accounts) {
     await hodler.release(id);
     await expectThrow(hodler.release(id));
   });
+
+  it("change dubi address", async function() {
+    const newDubi = await DUBI.new();
+
+    await hodler.changeDubiAddress(newDubi.address);
+
+    const dubiAddress = await hodler.dubi();
+
+    assert.equal(newDubi.address, dubiAddress);
+  });
 });

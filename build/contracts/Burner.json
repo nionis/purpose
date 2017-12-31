@@ -135,7 +135,7 @@
   "bytecode": "0x6060604052341561000f57600080fd5b60405160808061073583398101604052808051906020019091908051906020019091908051906020019091908051906020019091905050600073ffffffffffffffffffffffffffffffffffffffff168473ffffffffffffffffffffffffffffffffffffffff161415151561008257600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156100be57600080fd5b6000821115156100cd57600080fd5b6000811180156100e55750670de0b6b3a76400008111155b15156100f057600080fd5b836000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555082600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508160028190555081600381905550806004819055505050505061059c806101996000396000f30060606040526004361061008e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806336da44681461009357806344df8e70146100e857806370740aab146100fd5780639b5c0b5e14610152578063a07c7ce41461017b578063bbce2c17146101a4578063be9a6555146101cd578063f2cf687a146101f6575b600080fd5b341561009e57600080fd5b6100a661021f565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100f357600080fd5b6100fb610245565b005b341561010857600080fd5b610110610325565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561015d57600080fd5b61016561034a565b6040518082815260200191505060405180910390f35b341561018657600080fd5b61018e610350565b6040518082815260200191505060405180910390f35b34156101af57600080fd5b6101b76104e9565b6040518082815260200191505060405180910390f35b34156101d857600080fd5b6101e06104ef565b6040518082815260200191505060405180910390f35b341561020157600080fd5b6102096104f5565b6040518082815260200191505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600061024f610350565b905060008111151561026057600080fd5b426003819055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16633516df21826000604051602001526040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050602060405180830381600087803b15156102ff57600080fd5b6102c65a03f1151561031057600080fd5b50505060405180519050151561032257fe5b50565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60045481565b600080600080600061036d6003544261050190919063ffffffff16565b935061039a6301e1338061038c6004548761051a90919063ffffffff16565b61055590919063ffffffff16565b92506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166370a08231600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000604051602001526040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b151561048257600080fd5b6102c65a03f1151561049357600080fd5b5050506040518051905091506104cc670de0b6b3a76400006104be858561051a90919063ffffffff16565b61055590919063ffffffff16565b9050818111156104de578194506104e2565b8094505b5050505090565b60035481565b60025481565b670de0b6b3a764000081565b600082821115151561050f57fe5b818303905092915050565b600080600084141561052f576000915061054e565b828402905082848281151561054057fe5b0414151561054a57fe5b8091505b5092915050565b600080828481151561056357fe5b04905080915050929150505600a165627a7a72305820e384ef103d67d29a4959093a0659b853f39dd39141bfbef95102bf5ac5f620a60029",
   "deployedBytecode": "0x60606040526004361061008e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806336da44681461009357806344df8e70146100e857806370740aab146100fd5780639b5c0b5e14610152578063a07c7ce41461017b578063bbce2c17146101a4578063be9a6555146101cd578063f2cf687a146101f6575b600080fd5b341561009e57600080fd5b6100a661021f565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100f357600080fd5b6100fb610245565b005b341561010857600080fd5b610110610325565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561015d57600080fd5b61016561034a565b6040518082815260200191505060405180910390f35b341561018657600080fd5b61018e610350565b6040518082815260200191505060405180910390f35b34156101af57600080fd5b6101b76104e9565b6040518082815260200191505060405180910390f35b34156101d857600080fd5b6101e06104ef565b6040518082815260200191505060405180910390f35b341561020157600080fd5b6102096104f5565b6040518082815260200191505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600061024f610350565b905060008111151561026057600080fd5b426003819055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16633516df21826000604051602001526040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050602060405180830381600087803b15156102ff57600080fd5b6102c65a03f1151561031057600080fd5b50505060405180519050151561032257fe5b50565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60045481565b600080600080600061036d6003544261050190919063ffffffff16565b935061039a6301e1338061038c6004548761051a90919063ffffffff16565b61055590919063ffffffff16565b92506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166370a08231600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000604051602001526040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b151561048257600080fd5b6102c65a03f1151561049357600080fd5b5050506040518051905091506104cc670de0b6b3a76400006104be858561051a90919063ffffffff16565b61055590919063ffffffff16565b9050818111156104de578194506104e2565b8094505b5050505090565b60035481565b60025481565b670de0b6b3a764000081565b600082821115151561050f57fe5b818303905092915050565b600080600084141561052f576000915061054e565b828402905082848281151561054057fe5b0414151561054a57fe5b8091505b5092915050565b600080828481151561056357fe5b04905080915050929150505600a165627a7a72305820e384ef103d67d29a4959093a0659b853f39dd39141bfbef95102bf5ac5f620a60029",
   "sourceMap": "107:1413:0:-;;;345:417;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;476:1;456:22;;:8;:22;;;;448:31;;;;;;;;514:1;493:23;;:9;:23;;;;485:32;;;;;;;;540:1;531:6;:10;523:19;;;;;;;;576:1;556:17;:21;:55;;;;;333:7;581:17;:30;;556:55;548:64;;;;;;;;637:8;619:7;;:27;;;;;;;;;;;;;;;;;;663:9;652:8;;:20;;;;;;;;;;;;;;;;;;686:6;678:5;:14;;;;709:6;698:8;:17;;;;740;721:16;:36;;;;345:417;;;;107:1413;;;;;;",
-  "deployedSourceMap": "107:1413:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;184:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;768:234;;;;;;;;;;;;;;158:22;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;262:31;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1006:512;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;235:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;211:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;297:43;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;184:23;;;;;;;;;;;;;:::o;768:234::-;843:14;860:10;:8;:10::i;:::-;843:27;;893:1;884:6;:10;876:19;;;;;;;;933:3;922:8;:14;;;;970:7;;;;;;;;;;;:18;;;989:6;970:26;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;963:34;;;;;;768:234;:::o;158:22::-;;;;;;;;;;;;;:::o;262:31::-;;;;:::o;1006:512::-;1048:7;1094:18;1170:20;1272:15;1355:14;1115:17;1123:8;;1115:3;:7;;:17;;;;:::i;:::-;1094:38;;1193:45;1230:7;1193:32;1208:16;;1193:10;:14;;:32;;;;:::i;:::-;:36;;:45;;;;:::i;:::-;1170:68;;1290:7;;;;;;;;;;;:17;;;1308:8;;;;;;;;;;;1290:27;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1272:45;;1372:40;333:7;1372:25;1384:12;1372:7;:11;;:25;;;;:::i;:::-;:29;;:40;;;;:::i;:::-;1355:57;;1471:7;1462:6;:16;1458:36;;;1487:7;1480:14;;;;1458:36;1507:6;1500:13;;1006:512;;;;;;:::o;235:23::-;;;;:::o;211:20::-;;;;:::o;297:43::-;333:7;297:43;:::o;584:110:8:-;642:7;669:1;664;:6;;657:14;;;;;;688:1;684;:5;677:12;;584:110;;;;:::o;138:173::-;196:7;251:9;220:1;215;:6;211:35;;;238:1;231:8;;;;211:35;267:1;263;:5;251:17;;290:1;285;281;:5;;;;;;;;:10;274:18;;;;;;305:1;298:8;;138:173;;;;;;:::o;315:265::-;373:7;462:9;478:1;474;:5;;;;;;;;462:17;;574:1;567:8;;315:265;;;;;:::o",
+  "deployedSourceMap": "107:1413:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;184:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;768:234;;;;;;;;;;;;;;158:22;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;262:31;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1006:512;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;235:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;211:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;297:43;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;184:23;;;;;;;;;;;;;:::o;768:234::-;843:14;860:10;:8;:10::i;:::-;843:27;;893:1;884:6;:10;876:19;;;;;;;;933:3;922:8;:14;;;;970:7;;;;;;;;;;;:18;;;989:6;970:26;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;963:34;;;;;;768:234;:::o;158:22::-;;;;;;;;;;;;;:::o;262:31::-;;;;:::o;1006:512::-;1048:7;1094:18;1170:20;1272:15;1355:14;1115:17;1123:8;;1115:3;:7;;:17;;;;:::i;:::-;1094:38;;1193:45;1230:7;1193:32;1208:16;;1193:10;:14;;:32;;;;:::i;:::-;:36;;:45;;;;:::i;:::-;1170:68;;1290:7;;;;;;;;;;;:17;;;1308:8;;;;;;;;;;;1290:27;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1272:45;;1372:40;333:7;1372:25;1384:12;1372:7;:11;;:25;;;;:::i;:::-;:29;;:40;;;;:::i;:::-;1355:57;;1471:7;1462:6;:16;1458:36;;;1487:7;1480:14;;;;1458:36;1507:6;1500:13;;1006:512;;;;;;:::o;235:23::-;;;;:::o;211:20::-;;;;:::o;297:43::-;333:7;297:43;:::o;584:110:4:-;642:7;669:1;664;:6;;657:14;;;;;;688:1;684;:5;677:12;;584:110;;;;:::o;138:173::-;196:7;251:9;220:1;215;:6;211:35;;;238:1;231:8;;;;211:35;267:1;263;:5;251:17;;290:1;285;281;:5;;;;;;;;:10;274:18;;;;;;305:1;298:8;;138:173;;;;;;:::o;315:265::-;373:7;462:9;478:1;474;:5;;;;;;;;462:17;;574:1;567:8;;315:265;;;;;:::o",
   "source": "pragma solidity 0.4.18;\n\nimport \"zeppelin-solidity/contracts/math/SafeMath.sol\";\nimport \"./Purpose.sol\";\n\n\ncontract Burner {\n  using SafeMath for uint256;\n\n  Purpose public purpose;\n  address public supplier;\n  uint256 public start;\n  uint256 public lastBurn;\n  uint256 public burnPerweiYearly;\n  uint256 constant public MAXPERWEI = 1 ether;\n\n  function Burner (address _purpose, address _supplier, uint256 _start, uint256 _burnPerweiYearly) {\n    require(_purpose != address(0));\n    require(_supplier != address(0));\n    require(_start > 0);\n    require(_burnPerweiYearly > 0 && _burnPerweiYearly <= MAXPERWEI);\n\n    purpose = Purpose(_purpose);\n    supplier = _supplier;\n    start = _start;\n    lastBurn = _start;\n    burnPerweiYearly = _burnPerweiYearly;\n  }\n  \n  function burn () external {\n    // get how much purpose will be burned\n    uint256 amount = burnable();\n    require(amount > 0);\n\n    // update state\n    lastBurn = now;\n\n    // burn purpose\n    assert(purpose.supplyBurn(amount));\n  }\n\n  function burnable () public view returns (uint256) {\n    // seconds since last burn\n    uint256 secsPassed = now.sub(lastBurn);\n    // how much percent to burn\n    uint256 perweiToBurn = secsPassed.mul(burnPerweiYearly).div(1 years);\n\n    // balance of supplier\n    uint256 balance = purpose.balanceOf(supplier);\n    // how much purpose to burn\n    uint256 amount = balance.mul(perweiToBurn).div(MAXPERWEI);\n\n    // return how much would be burned\n    if (amount > balance) return balance;\n    return amount;\n  }\n}",
   "sourcePath": "/mnt/d/work/thesingularitygroup/projects/purpose/contracts/contracts/Burner.sol",
   "ast": {
@@ -162,7 +162,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1617,
+          "SourceUnit": 842,
           "absolutePath": "zeppelin-solidity/contracts/math/SafeMath.sol",
           "file": "zeppelin-solidity/contracts/math/SafeMath.sol",
           "scope": 161,
@@ -177,7 +177,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1459,
+          "SourceUnit": 744,
           "absolutePath": "/mnt/d/work/thesingularitygroup/projects/purpose/contracts/contracts/Purpose.sol",
           "file": "./Purpose.sol",
           "scope": 161,
@@ -214,7 +214,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "SafeMath",
-                  "referencedDeclaration": 1616,
+                  "referencedDeclaration": 841,
                   "type": "library SafeMath"
                 },
                 "id": 4,
@@ -251,7 +251,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Purpose",
-                  "referencedDeclaration": 1458,
+                  "referencedDeclaration": 743,
                   "type": "contract Purpose"
                 },
                 "id": 7,
@@ -577,7 +577,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2438,
+                              "referencedDeclaration": 1663,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -713,7 +713,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2438,
+                              "referencedDeclaration": 1663,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -849,7 +849,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2438,
+                              "referencedDeclaration": 1663,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -946,7 +946,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2438,
+                              "referencedDeclaration": 1663,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1136,7 +1136,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1458,
+                                  "referencedDeclaration": 743,
                                   "type": "type(contract Purpose)",
                                   "value": "Purpose"
                                 },
@@ -1532,7 +1532,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2438,
+                              "referencedDeclaration": 1663,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1634,7 +1634,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2437,
+                              "referencedDeclaration": 1662,
                               "type": "uint256",
                               "value": "now"
                             },
@@ -1680,7 +1680,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2426,
+                              "referencedDeclaration": 1651,
                               "type": "function (bool) pure",
                               "value": "assert"
                             },
@@ -1716,7 +1716,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "supplyBurn",
-                                  "referencedDeclaration": 1397,
+                                  "referencedDeclaration": 682,
                                   "type": "function (uint256) external returns (bool)"
                                 },
                                 "children": [
@@ -1901,7 +1901,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "sub",
-                              "referencedDeclaration": 1591,
+                              "referencedDeclaration": 816,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -1911,7 +1911,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2437,
+                                  "referencedDeclaration": 1662,
                                   "type": "uint256",
                                   "value": "now"
                                 },
@@ -2009,7 +2009,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "div",
-                              "referencedDeclaration": 1571,
+                              "referencedDeclaration": 796,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -2041,7 +2041,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "mul",
-                                      "referencedDeclaration": 1553,
+                                      "referencedDeclaration": 778,
                                       "type": "function (uint256,uint256) pure returns (uint256)"
                                     },
                                     "children": [
@@ -2176,7 +2176,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "balanceOf",
-                              "referencedDeclaration": 1987,
+                              "referencedDeclaration": 1212,
                               "type": "function (address) view external returns (uint256)"
                             },
                             "children": [
@@ -2284,7 +2284,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "div",
-                              "referencedDeclaration": 1571,
+                              "referencedDeclaration": 796,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -2316,7 +2316,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "mul",
-                                      "referencedDeclaration": 1553,
+                                      "referencedDeclaration": 778,
                                       "type": "function (uint256,uint256) pure returns (uint256)"
                                     },
                                     "children": [
@@ -2519,5 +2519,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T17:40:05.295Z"
+  "updatedAt": "2017-12-31T04:46:18.517Z"
 }

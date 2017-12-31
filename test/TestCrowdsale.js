@@ -3,7 +3,7 @@ const Crowdsale = artifacts.require("Crowdsale");
 const expectThrow = require("./helpers/expectThrow");
 
 contract("Crowdsale", function(accounts) {
-  const [owner, investor] = accounts;
+  const [owner, investor, wallet1, wallet2] = accounts;
   const buyAmount = new web3.BigNumber(web3.toWei(1, "ether"));
   const purposeWeiRate6 = 6;
   const purposeWeiRate12 = 12;
@@ -23,11 +23,10 @@ contract("Crowdsale", function(accounts) {
   beforeEach(async function() {
     purpose = await Purpose.new(owner);
     crowdsale = await Crowdsale.new(
-      owner,
+      wallet1,
       purpose.address,
       purposeWeiRate6,
-      etherWeiRate1,
-      owner
+      etherWeiRate1
     );
 
     // allow crowdsale to access owners tokens
@@ -56,13 +55,15 @@ contract("Crowdsale", function(accounts) {
 
   it("change rate", async function() {
     await expectThrow(
-      crowdsale.setRate(purposeWeiRate1, etherWeiRate2, {
+      crowdsale.changeRate(purposeWeiRate1, etherWeiRate2, {
         from: investor
       })
     );
   });
 
   it("sendTransaction rate 6/1", async function() {
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+
     await crowdsale.sendTransaction({
       from: investor,
       value: buyAmount
@@ -70,12 +71,18 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate6, etherWeiRate1);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
   });
 
   it("buyTokens rate 1/2", async function() {
-    await crowdsale.setRate(purposeWeiRate1, etherWeiRate2);
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+
+    await crowdsale.changeRate(purposeWeiRate1, etherWeiRate2);
 
     await crowdsale.buyTokens(investor, {
       from: investor,
@@ -84,11 +91,17 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate1, etherWeiRate2);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
   });
 
   it("buyTokens rate 6/1", async function() {
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+
     await crowdsale.buyTokens(investor, {
       from: investor,
       value: buyAmount
@@ -96,12 +109,18 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate6, etherWeiRate1);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
   });
 
   it("buy rate 12/1", async function() {
-    await crowdsale.setRate(purposeWeiRate12, etherWeiRate1);
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+
+    await crowdsale.changeRate(purposeWeiRate12, etherWeiRate1);
 
     await crowdsale.buyTokens(investor, {
       from: investor,
@@ -110,11 +129,16 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate12, etherWeiRate1);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
   });
 
   it("buy rate 6/1, 1 wei", async function() {
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
     const buyAmount = new web3.BigNumber(1);
 
     await crowdsale.buyTokens(investor, {
@@ -124,15 +148,21 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate6, etherWeiRate1);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
     assert.isTrue(tokenBalanceAfter.equals(6));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
   });
 
   it("buy rate 1/2, 2 wei", async function() {
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+
     const buyAmount = new web3.BigNumber(2);
 
-    await crowdsale.setRate(purposeWeiRate1, etherWeiRate2);
+    await crowdsale.changeRate(purposeWeiRate1, etherWeiRate2);
 
     await crowdsale.buyTokens(investor, {
       from: investor,
@@ -141,12 +171,18 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate1, etherWeiRate2);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
     assert.isTrue(tokenBalanceAfter.equals(1));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
   });
 
   it("buy rate 6/1, 1e10 wei", async function() {
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+
     const buyAmount = new web3.BigNumber(1e10);
 
     await crowdsale.buyTokens(investor, {
@@ -156,8 +192,35 @@ contract("Crowdsale", function(accounts) {
 
     const estimate = calcTokens(buyAmount, purposeWeiRate6, etherWeiRate1);
     const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
 
     assert.isTrue(tokenBalanceAfter.equals(estimate));
     assert.isTrue(tokenBalanceAfter.equals(6e10));
+    assert.isTrue(
+      wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(buyAmount)
+    );
+  });
+
+  it("change wallet", async function() {
+    const wallet1BalanceBefore = await web3.eth.getBalance(wallet1);
+    const wallet2BalanceBefore = await web3.eth.getBalance(wallet2);
+
+    await crowdsale.changeWallet(wallet2);
+
+    await crowdsale.buyTokens(investor, {
+      from: investor,
+      value: buyAmount
+    });
+
+    const estimate = calcTokens(buyAmount, purposeWeiRate6, etherWeiRate1);
+    const tokenBalanceAfter = await purpose.balanceOf(investor);
+    const wallet1BalanceAfter = await web3.eth.getBalance(wallet1);
+    const wallet2BalanceAfter = await web3.eth.getBalance(wallet2);
+
+    assert.isTrue(tokenBalanceAfter.equals(estimate));
+    assert.isTrue(wallet1BalanceAfter.minus(wallet1BalanceBefore).equals(0));
+    assert.isTrue(
+      wallet2BalanceAfter.minus(wallet2BalanceBefore).equals(buyAmount)
+    );
   });
 });

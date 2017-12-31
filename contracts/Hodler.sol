@@ -2,11 +2,12 @@ pragma solidity 0.4.18;
 
 import "zeppelin-solidity/contracts/token/SafeERC20.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Purpose.sol";
 import "./DUBI.sol";
 
 
-contract Hodler {
+contract Hodler is Ownable {
   using SafeMath for uint256;
   using SafeERC20 for Purpose;
   using SafeERC20 for DUBI;
@@ -26,9 +27,14 @@ contract Hodler {
 
   function Hodler(address _purpose, address _dubi) {
     require(_purpose != address(0));
-    require(_dubi != address(0));
 
     purpose = Purpose(_purpose);
+    changeDubiAddress(_dubi);
+  }
+
+  function changeDubiAddress(address _dubi) public onlyOwner {
+    require(_dubi != address(0));
+
     dubi = DUBI(_dubi);
   }
 

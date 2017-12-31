@@ -36,14 +36,12 @@ contract Crowdsale is Ownable, Pausable {
    */
   event TokenPurchase(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 amount);
 
-  function Crowdsale(address _wallet, address _token, uint256 _purposeWeiRate, uint256 _etherWeiRate, address _owner) {
-    require(_wallet != address(0));
+  function Crowdsale(address _wallet, address _token, uint256 _purposeWeiRate, uint256 _etherWeiRate) {
     require(_token != address(0));
 
-    wallet = _wallet;
+    changeWallet(_wallet);
     token = ERC20(_token);
-    setRate(_purposeWeiRate, _etherWeiRate);
-    owner = _owner;
+    changeRate(_purposeWeiRate, _etherWeiRate);
   }
 
   // fallback function can be used to buy tokens
@@ -51,8 +49,15 @@ contract Crowdsale is Ownable, Pausable {
     buyTokens(msg.sender);
   }
 
+  // change wallet
+  function changeWallet(address _wallet) public onlyOwner {
+    require(_wallet != address(0));
+
+    wallet = _wallet;
+  }
+
   // change rate
-  function setRate(uint256 _purposeWeiRate, uint256 _etherWeiRate) public onlyOwner {
+  function changeRate(uint256 _purposeWeiRate, uint256 _etherWeiRate) public onlyOwner {
     require(_purposeWeiRate > 0);
     require(_etherWeiRate > 0);
     

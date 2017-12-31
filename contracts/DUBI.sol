@@ -17,7 +17,7 @@ contract DUBI is StandardToken, BurnableToken, RBAC {
     totalSupply = 0;
   }
 
-  // used by hodler or gatherer contracts to mint DUBI tokens
+  // used by contracts to mint DUBI tokens
   function mint(address _to, uint256 _amount) external onlyRole(ROLE_MINT) returns (bool) {
     require(_to != address(0));
     require(_amount > 0);

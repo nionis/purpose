@@ -5,14 +5,12 @@ const Purpose = artifacts.require("./Purpose.sol");
 const DUBI = artifacts.require("./DUBI.sol");
 const Burner = artifacts.require("./Burner.sol");
 const Hodler = artifacts.require("./Hodler.sol");
-const Gatherer = artifacts.require("./Gatherer.sol");
 const Crowdsale = artifacts.require("./Crowdsale.sol");
 
 const burnStart = +new Date() / 1e3;
 const burnPerweiYearly = web3.toWei(0.2, "ether"); // 20% per year
 const purposeWeiRate = 6; // ~100$ of ether (24/12/17)
 const etherWeiRate = 1; // 6/1
-const gathererRate = 1268391679;
 
 const start = async (deployer, network, accounts) => {
   const deploy = Deploy(deployer);
@@ -36,43 +34,50 @@ const start = async (deployer, network, accounts) => {
   // --> deploy hodler
   const hodler = await deploy(Hodler, purpose.address, dubi.address);
 
-  // --> deploy gatherer
-  const gatherer = await deploy(Gatherer, dubi.address, gathererRate);
-
-  // -> RBAC
-  // allow burner to burn purpose
-  await purpose.adminAddRole(burner.address, "burn");
-  // allow hodler to hodl purpose
-  await purpose.adminAddRole(hodler.address, "transfer");
-  // allow hodler to mint dubi
-  await dubi.adminAddRole(hodler.address, "mint");
-  // allow gatherer to mint dubi
-  await dubi.adminAddRole(gatherer.address, "mint");
-  // disallow admin to change roles
-  await purpose.adminRemoveRole(owner, "admin");
-  await dubi.adminRemoveRole(owner, "admin");
-  // add new admin and remove previous
-  await gatherer.adminAddRole(addresses.athene, "admin");
-  await gatherer.adminRemoveRole(owner, "admin");
-
   // --> crowdsale
   const crowdsale = await deploy(
     Crowdsale,
     addresses.atheneWallet,
     purpose.address,
     purposeWeiRate,
-    etherWeiRate,
-    addresses.athene
+    etherWeiRate
   );
-  // allow crowdsale to transfer from supplier (will be called by athene)
-  // const balanceOfAthene = await purpose.balanceOf(addresses.athene);
-  // await purpose.approve(crowdsale.address, balanceOfAthene, {
-  //   from: addresses.athene
-  // });
+
+  // -> Ownable & RBAC permissions
+  // - adding RBAC roles
+  // allow burner to burn purpose
+  await purpose.adminAddRole(burner.address, "burn");
+  // allow hodler to transfer purpose
+  await purpose.adminAddRole(hodler.address, "transfer");
+  // allow hodler to mint dubi
+  await dubi.adminAddRole(hodler.address, "mint");
+
+  // - tranfering ownership
+  // transfer ownership to athene
+  await dubi.adminAddRole(addresses.athene, "admin");
+  await hodler.transferOwnership(addresses.athene);
+  await crowdsale.transferOwnership(addresses.athene);
+
+  // // - removing roles
+  // // disallow deployer to change roles
+  await purpose.adminRemoveRole(owner, "admin");
+  await dubi.adminRemoveRole(owner, "admin");
+
+  /* after migration
+    permissions:
+      purpose: nobody can change anything
+      burner: nobody can change anything
+      crowdsale: athene can pause / change rate
+      dubi: athene can change who mints
+      hodler: athene can change dubi address
+
+    todo:
+      athene needs to whitelist crowdsale to be able to pull purpose from him
+  */
 };
 
 module.exports = (deployer, network, accounts) => {
   if (network === "develop") return;
 
-  return start(deployer, network, accounts);
+  return start(deployer, network, accounts).catch(console.error);
 };
