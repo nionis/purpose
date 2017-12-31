@@ -10,25 +10,31 @@ const DUBI = artifacts.require("DUBI");
 const Hodler = artifacts.require("Hodler");
 
 contract("Hodler", function(accounts) {
-  const [owner] = accounts;
+  const [owner, user] = accounts;
   const purposeInput = new web3.BigNumber(web3.toWei(100, "ether"));
   let purpose;
   let dubi;
   let hodler;
 
   const accurateSeconds = AccurateEnough(60);
-  const calcMonths = (dubiAmount, purposeAmount) => {
+  const isMonthsAcurrateEnough = (months, dubiAmount, purposeAmount) => {
     if (purposeAmount.equals(0)) return 0;
 
-    const months = new web3.BigNumber(100)
+    const _months = new web3.BigNumber(100)
       .times(dubiAmount)
       .times(3)
-      .div(purposeAmount);
+      .div(purposeAmount.mul(1));
+    const diff = _months.minus(months);
 
-    return months;
+    accurateSeconds(duration.months(diff));
   };
-  const isMonthsAcurrateEnough = (months, dubiAmount, purposeAmount) => {
-    const _months = calcMonths(dubiAmount, purposeAmount);
+  const isOwnerMonthsAcurrateEnough = (months, dubiAmount, purposeAmount) => {
+    if (purposeAmount.equals(0)) return 0;
+
+    const _months = new web3.BigNumber(10000)
+      .times(dubiAmount)
+      .times(3)
+      .div(purposeAmount.mul(5));
     const diff = _months.minus(months);
 
     accurateSeconds(duration.months(diff));
@@ -39,6 +45,7 @@ contract("Hodler", function(accounts) {
     dubi = await DUBI.new();
     hodler = await Hodler.new(purpose.address, dubi.address);
 
+    await purpose.transfer(user, purposeInput);
     await purpose.adminAddRole(hodler.address, "transfer");
     await dubi.adminAddRole(hodler.address, "mint");
   });
@@ -53,7 +60,7 @@ contract("Hodler", function(accounts) {
     const id = randomId();
     const months = 3;
 
-    await expectThrow(hodler.hodl(id, 1, months));
+    await expectThrow(hodler.hodl(id, 1000, months));
   });
 
   it("create item twice", async function() {
@@ -68,15 +75,19 @@ contract("Hodler", function(accounts) {
     const id = randomId();
     const months = 3;
 
-    const prpsBalanceBefore = await purpose.balanceOf(owner);
+    const prpsBalanceBefore = await purpose.balanceOf(user);
     const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
-    const dubiBalanceBefore = await dubi.balanceOf(owner);
+    const dubiBalanceBefore = await dubi.balanceOf(user);
+    const ownerDubiBalanceBefore = await dubi.balanceOf(owner);
 
-    await hodler.hodl(id, purposeInput, months);
+    await hodler.hodl(id, purposeInput, months, {
+      from: user
+    });
 
-    const prpsBalanceAfter = await purpose.balanceOf(owner);
+    const prpsBalanceAfter = await purpose.balanceOf(user);
     const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
-    const dubiBalanceAfter = await dubi.balanceOf(owner);
+    const dubiBalanceAfter = await dubi.balanceOf(user);
+    const ownerDubiBalanceAfter = await dubi.balanceOf(owner);
 
     assert.isTrue(
       prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
@@ -85,21 +96,26 @@ contract("Hodler", function(accounts) {
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
     isMonthsAcurrateEnough(months, dubiBalanceAfter, purposeInput);
+    isOwnerMonthsAcurrateEnough(months, ownerDubiBalanceAfter, purposeInput);
   });
 
   it("amounts, 6 months", async function() {
     const id = randomId();
     const months = 6;
 
-    const prpsBalanceBefore = await purpose.balanceOf(owner);
+    const prpsBalanceBefore = await purpose.balanceOf(user);
     const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
-    const dubiBalanceBefore = await dubi.balanceOf(owner);
+    const dubiBalanceBefore = await dubi.balanceOf(user);
+    const ownerDubiBalanceBefore = await dubi.balanceOf(owner);
 
-    await hodler.hodl(id, purposeInput, months);
+    await hodler.hodl(id, purposeInput, months, {
+      from: user
+    });
 
-    const prpsBalanceAfter = await purpose.balanceOf(owner);
+    const prpsBalanceAfter = await purpose.balanceOf(user);
     const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
-    const dubiBalanceAfter = await dubi.balanceOf(owner);
+    const dubiBalanceAfter = await dubi.balanceOf(user);
+    const ownerDubiBalanceAfter = await dubi.balanceOf(owner);
 
     assert.isTrue(
       prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
@@ -108,21 +124,26 @@ contract("Hodler", function(accounts) {
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
     isMonthsAcurrateEnough(months, dubiBalanceAfter, purposeInput);
+    isOwnerMonthsAcurrateEnough(months, ownerDubiBalanceAfter, purposeInput);
   });
 
   it("amounts, 12 months", async function() {
     const id = randomId();
     const months = 12;
 
-    const prpsBalanceBefore = await purpose.balanceOf(owner);
+    const prpsBalanceBefore = await purpose.balanceOf(user);
     const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
-    const dubiBalanceBefore = await dubi.balanceOf(owner);
+    const dubiBalanceBefore = await dubi.balanceOf(user);
+    const ownerDubiBalanceBefore = await dubi.balanceOf(owner);
 
-    await hodler.hodl(id, purposeInput, months);
+    await hodler.hodl(id, purposeInput, months, {
+      from: user
+    });
 
-    const prpsBalanceAfter = await purpose.balanceOf(owner);
+    const prpsBalanceAfter = await purpose.balanceOf(user);
     const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
-    const dubiBalanceAfter = await dubi.balanceOf(owner);
+    const dubiBalanceAfter = await dubi.balanceOf(user);
+    const ownerDubiBalanceAfter = await dubi.balanceOf(owner);
 
     assert.isTrue(
       prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
@@ -131,6 +152,7 @@ contract("Hodler", function(accounts) {
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
     isMonthsAcurrateEnough(months, dubiBalanceAfter, purposeInput);
+    isOwnerMonthsAcurrateEnough(months, ownerDubiBalanceAfter, purposeInput);
   });
 
   it("getItem", async function() {

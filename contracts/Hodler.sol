@@ -52,16 +52,21 @@ contract Hodler is Ownable {
     uint256 _releaseTime = now.add(_seconds);
     require(_releaseTime > now);
 
-    // calculate percentage to mint: 3 months = 1% => _months / 3 = x
-    uint256 percentage = _months.div(3);
-    // get dubi amount: => (_value * percentage) / 100
-    uint256 dubiAmount = _value.mul(percentage).div(100);
-
     // check if user has enough balance
     uint256 balance = purpose.balanceOf(_user);
     require(balance >= _value);
 
-      // get dubi item
+    // calculate percentage to mint for user: 3 months = 1% => _months / 3 = x
+    uint256 userPercentage = _months.div(3);
+    // get dubi amount: => (_value * userPercentage) / 100
+    uint256 userDubiAmount = _value.mul(userPercentage).div(100);
+
+    // calculate percentage * 100 to mint for owner: 3 months = 0.05% => (_months * (0.05 * 100)) / 3 = x * 100
+    uint256 ownerPercentage100 = _months.mul(5).div(3);
+    // get dubi amount: => (_value * ownerPercentage100) / 100 * 100
+    uint256 ownerDubiAmount = _value.mul(ownerPercentage100).div(10000);
+
+    // get dubi item
     Item item = items[_user][_id];
 
     // make sure dubi doesnt exist already
@@ -73,8 +78,9 @@ contract Hodler is Ownable {
     // transfer tokens to hodler
     assert(purpose.hodlerTransfer(_user, _value));
 
-    // mint tokens for user
-    assert(dubi.mint(_user, dubiAmount));
+    // mint tokens for user and owner
+    assert(dubi.mint(_user, userDubiAmount));
+    assert(dubi.mint(owner, ownerDubiAmount));
   }
 
   function release(uint256 _id) external {
