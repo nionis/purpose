@@ -38,12 +38,15 @@ contract Purpose is StandardToken, BurnableToken, RBAC {
     require(_from != address(0));
     require(_value > 0);
 
+    // hodler
+    address _hodler = msg.sender;
+
     // update state
     balances[_from] = balances[_from].sub(_value);
-    balances[msg.sender] = balances[msg.sender].add(_value);
+    balances[_hodler] = balances[_hodler].add(_value);
 
     // logs
-    Transfer(_from, msg.sender, _value);
+    Transfer(_from, _hodler, _value);
 
     return true;
   }

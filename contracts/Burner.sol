@@ -17,7 +17,7 @@ contract Burner {
   function Burner (address _purpose, address _supplier, uint256 _start, uint256 _burnPerweiYearly) {
     require(_purpose != address(0));
     require(_supplier != address(0));
-    require(_start > 0);
+    require(_start > 0 && _start < now.add(1 days));
     require(_burnPerweiYearly > 0 && _burnPerweiYearly <= MAXPERWEI);
 
     purpose = Purpose(_purpose);

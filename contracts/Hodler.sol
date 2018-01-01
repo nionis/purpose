@@ -44,7 +44,13 @@ contract Hodler is Ownable {
     // only 3 types are allowed
     require(_months == 3 || _months == 6 || _months == 12);
 
+    // user
     address _user = msg.sender;
+
+    // get dubi item
+    Item item = items[_user][_id];
+    // make sure dubi doesnt exist already
+    require(item.id != _id);
 
     // turn months to seconds
     uint256 _seconds = _months.mul(2628000);
@@ -66,12 +72,6 @@ contract Hodler is Ownable {
     // get dubi amount: => (_value * ownerPercentage100) / 100 * 100
     uint256 ownerDubiAmount = _value.mul(ownerPercentage100).div(10000);
 
-    // get dubi item
-    Item item = items[_user][_id];
-
-    // make sure dubi doesnt exist already
-    require(item.id != _id);
-
     // update state
     items[_user][_id] = Item(_id, _user, _value, _releaseTime, false);
 
@@ -86,6 +86,7 @@ contract Hodler is Ownable {
   function release(uint256 _id) external {
     require(_id > 0);
 
+    // user
     address _user = msg.sender;
 
     // get item
