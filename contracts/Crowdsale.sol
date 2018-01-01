@@ -36,7 +36,7 @@ contract Crowdsale is Ownable, Pausable {
    */
   event TokenPurchase(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 amount);
 
-  function Crowdsale(address _wallet, address _token, uint256 _purposeWeiRate, uint256 _etherWeiRate) {
+  function Crowdsale(address _wallet, address _token, uint256 _purposeWeiRate, uint256 _etherWeiRate) public {
     require(_token != address(0));
 
     changeWallet(_wallet);
@@ -45,7 +45,7 @@ contract Crowdsale is Ownable, Pausable {
   }
 
   // fallback function can be used to buy tokens
-  function () payable {
+  function () external payable {
     buyTokens(msg.sender);
   }
 

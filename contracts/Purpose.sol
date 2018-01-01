@@ -13,7 +13,7 @@ contract Purpose is StandardToken, BurnableToken, RBAC {
   string constant public ROLE_TRANSFER = "transfer";
   address public supplier;
 
-  function Purpose(address _supplier) {
+  function Purpose(address _supplier) public {
     supplier = _supplier;
     totalSupply = 1000000000 ether;
     balances[supplier] = totalSupply;

@@ -25,7 +25,7 @@ contract Hodler is Ownable {
 
   mapping(address => mapping(uint256 => Item)) private items;
 
-  function Hodler(address _purpose, address _dubi) {
+  function Hodler(address _purpose, address _dubi) public {
     require(_purpose != address(0));
 
     purpose = Purpose(_purpose);
@@ -48,7 +48,7 @@ contract Hodler is Ownable {
     address _user = msg.sender;
 
     // get dubi item
-    Item item = items[_user][_id];
+    Item storage item = items[_user][_id];
     // make sure dubi doesnt exist already
     require(item.id != _id);
 
@@ -90,7 +90,7 @@ contract Hodler is Ownable {
     address _user = msg.sender;
 
     // get item
-    Item item = items[_user][_id];
+    Item storage item = items[_user][_id];
 
     // check if it exists
     require(item.id == _id);
@@ -110,8 +110,8 @@ contract Hodler is Ownable {
     purpose.safeTransfer(item.beneficiary, item.value);
   }
 
-  function getItem(address _user, uint256 _id) view returns (uint256, address, uint256, uint256, bool) {
-    Item item = items[_user][_id];
+  function getItem(address _user, uint256 _id) public view returns (uint256, address, uint256, uint256, bool) {
+    Item storage item = items[_user][_id];
 
     return (
       item.id,

@@ -13,7 +13,7 @@ contract DUBI is StandardToken, BurnableToken, RBAC {
 
   event MintLog(address indexed to, uint256 amount);
 
-  function DUBI() {
+  function DUBI() public {
     totalSupply = 0;
   }
 
