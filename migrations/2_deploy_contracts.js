@@ -1,5 +1,5 @@
 const Deploy = require("./helpers/Deploy");
-const { addresses } = require("../keys");
+const Keys = require("../keys");
 
 const Purpose = artifacts.require("./Purpose.sol");
 const DUBI = artifacts.require("./DUBI.sol");
@@ -8,6 +8,9 @@ const Hodler = artifacts.require("./Hodler.sol");
 const Crowdsale = artifacts.require("./Crowdsale.sol");
 
 const start = async (deployer, network, accounts) => {
+  if (network === "develop") return;
+
+  const keys = Keys(network);
   const deploy = Deploy(deployer);
   const [owner] = accounts;
 
@@ -17,7 +20,7 @@ const start = async (deployer, network, accounts) => {
   const etherWeiRate = 1; // 6/1
 
   // --> deploy purpose
-  const purpose = await deploy(Purpose, addresses.athene);
+  const purpose = await deploy(Purpose, keys.athene);
 
   // --> deploy dubi
   const dubi = await deploy(DUBI);
@@ -26,7 +29,7 @@ const start = async (deployer, network, accounts) => {
   const burner = await deploy(
     Burner,
     Purpose.address,
-    addresses.athene,
+    keys.athene,
     burnStart,
     burnPerweiYearly
   );
@@ -37,7 +40,7 @@ const start = async (deployer, network, accounts) => {
   // --> crowdsale
   const crowdsale = await deploy(
     Crowdsale,
-    addresses.atheneWallet,
+    keys.wallet,
     purpose.address,
     purposeWeiRate,
     etherWeiRate
@@ -54,12 +57,12 @@ const start = async (deployer, network, accounts) => {
 
   // - tranfering ownership
   // transfer ownership to athene
-  await dubi.adminAddRole(addresses.athene, "admin");
-  await hodler.transferOwnership(addresses.athene);
-  await crowdsale.transferOwnership(addresses.athene);
+  await dubi.adminAddRole(keys.athene, "admin");
+  await hodler.transferOwnership(keys.athene);
+  await crowdsale.transferOwnership(keys.wallet);
 
-  // // - removing roles
-  // // disallow deployer to change roles
+  // - removing roles
+  // disallow deployer to change roles
   await purpose.adminRemoveRole(owner, "admin");
   await dubi.adminRemoveRole(owner, "admin");
 
@@ -67,17 +70,13 @@ const start = async (deployer, network, accounts) => {
     permissions:
       purpose: nobody can change anything
       burner: nobody can change anything
-      crowdsale: athene can pause / change rate
+      crowdsale: wallet can pause / change rate
       dubi: athene can change who mints
       hodler: athene can change dubi address
 
     todo:
-      athene needs to whitelist crowdsale to be able to pull purpose from him
+      athene needs to approve X amount to crowdsale to be able to pull purpose from him
   */
 };
 
-module.exports = (deployer, network, accounts) => {
-  if (network === "develop") return;
-
-  return start(deployer, network, accounts).catch(console.error);
-};
+module.exports = start;
