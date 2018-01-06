@@ -41,6 +41,7 @@ const start = async (deployer, network, accounts) => {
   const crowdsale = await deploy(
     Crowdsale,
     keys.wallet,
+    keys.athene,
     purpose.address,
     purposeWeiRate,
     etherWeiRate

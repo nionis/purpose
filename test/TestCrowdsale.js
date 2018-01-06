@@ -4,6 +4,7 @@ const expectThrow = require("./helpers/expectThrow");
 
 contract("Crowdsale", function(accounts) {
   const [owner, investor, wallet1, wallet2] = accounts;
+  const supplier = owner;
   const buyAmount = new web3.BigNumber(web3.toWei(1, "ether"));
   const purposeWeiRate6 = 6;
   const purposeWeiRate12 = 12;
@@ -24,14 +25,15 @@ contract("Crowdsale", function(accounts) {
     purpose = await Purpose.new(owner);
     crowdsale = await Crowdsale.new(
       wallet1,
+      supplier,
       purpose.address,
       purposeWeiRate6,
       etherWeiRate1
     );
 
-    // allow crowdsale to access owners tokens
-    const balanceOfOwner = await purpose.balanceOf(owner);
-    await purpose.approve(crowdsale.address, balanceOfOwner);
+    // allow crowdsale to access suppliers tokens
+    const balanceOfSupplier = await purpose.balanceOf(supplier);
+    await purpose.approve(crowdsale.address, balanceOfSupplier);
   });
 
   it("is paused", async function() {
