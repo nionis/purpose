@@ -5,6 +5,11 @@ const mainnetKeys = Keys("mainnet");
 
 module.exports = {
   networks: {
+    develop: {
+      host: "127.0.0.1",
+      port: 9545,
+      network_id: "*" // Match any network id
+    },
     rinkeby: {
       provider: new HDWalletProvider(
         rinkebyKeys.mnemonic,
