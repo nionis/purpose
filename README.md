@@ -19,5 +19,4 @@ For more details go to the [wiki page](https://github.com/nionis/purpose/wiki)
 
 ## To do:
 
-* audit
 * ~~run on eth testnet~~ ([participate](https://github.com/nionis/purpose/wiki/Testnet))

@@ -8,14 +8,14 @@ module.exports = {
     develop: {
       host: "127.0.0.1",
       port: 9545,
-      network_id: "*" // Match any network id
+      network_id: "*"
     },
     rinkeby: {
       provider: new HDWalletProvider(
         rinkebyKeys.mnemonic,
         `https://rinkeby.infura.io/${rinkebyKeys.infuraKey}`
       ),
-      network_id: 3
+      network_id: 4
     },
     mainnet: {
       provider: new HDWalletProvider(
