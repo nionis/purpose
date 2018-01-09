@@ -19,30 +19,25 @@ const start = async (deployer, network, accounts) => {
   const crowdsale = Crowdsale.at(contracts.Crowdsale);
 
   // -> Ownable & RBAC permissions
-  await Promise.all([
-    // allow burner to burn purpose
-    purpose.adminAddRole(contracts.Burner, "burn"),
-    // allow hodler to transfer purpose
-    purpose.adminAddRole(contracts.Hodler, "transfer"),
-    // allow hodler to mint dubi
-    dubi.adminAddRole(contracts.Hodler, "mint")
-  ]);
 
-  await Promise.all([
-    // transfer ownership to athene
-    dubi.adminAddRole(keys.athene, "admin"),
-    // transfer ownership to athene
-    hodler.transferOwnership(keys.athene),
-    // transfer ownership to athene
-    crowdsale.transferOwnership(keys.wallet)
-  ]);
+  // allow burner to burn purpose
+  await purpose.adminAddRole(contracts.Burner, "burn");
+  // allow hodler to transfer purpose
+  await purpose.adminAddRole(contracts.Hodler, "transfer");
+  // allow hodler to mint dubi
+  await dubi.adminAddRole(contracts.Hodler, "mint");
 
-  await Promise.all([
-    // disallow deployer to change roles
-    purpose.adminRemoveRole(owner, "admin"),
-    // disallow deployer to change roles
-    dubi.adminRemoveRole(owner, "admin")
-  ]);
+  // transfer ownership to athene
+  await dubi.adminAddRole(keys.athene, "admin");
+  // transfer ownership to athene
+  await hodler.transferOwnership(keys.athene);
+  // transfer ownership to athene
+  await crowdsale.transferOwnership(keys.wallet);
+
+  // disallow deployer to change roles
+  await purpose.adminRemoveRole(owner, "admin");
+  // disallow deployer to change roles
+  await dubi.adminRemoveRole(owner, "admin");
 };
 
 module.exports = start;
