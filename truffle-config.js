@@ -22,6 +22,8 @@ module.exports = {
         mainnetKeys.mnemonic,
         `https://mainnet.infura.io/${mainnetKeys.infuraKey}`
       ),
+      gas: "7000000",
+      gasPrice: "100000000000",
       network_id: 1
     }
   }
