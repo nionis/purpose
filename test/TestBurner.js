@@ -1,7 +1,7 @@
-const { increaseTime, duration } = require("./helpers/increaseTime");
-const getCurrentBlock = require("./helpers/getCurrentBlock");
-const latestTime = require("./helpers/latestTime");
-const AccurateEnough = require("./helpers/AccurateEnough");
+const { increaseTime, duration } = require("../utils/increaseTime");
+const getCurrentBlock = require("../utils/getCurrentBlock");
+const latestTime = require("../utils/latestTime");
+const AccurateEnough = require("../utils/AccurateEnough");
 const Purpose = artifacts.require("Purpose");
 const Burner = artifacts.require("Burner");
 

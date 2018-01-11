@@ -1,10 +1,10 @@
-const { advanceToBlock } = require("./helpers/advanceToBlock");
-const { increaseTime, duration } = require("./helpers/increaseTime");
-const getCurrentBlock = require("./helpers/getCurrentBlock");
-const latestTime = require("./helpers/latestTime");
-const expectThrow = require("./helpers/expectThrow");
-const randomId = require("./helpers/randomId");
-const AccurateEnough = require("./helpers/AccurateEnough");
+const { advanceToBlock } = require("../utils/advanceToBlock");
+const { increaseTime, duration } = require("../utils/increaseTime");
+const getCurrentBlock = require("../utils/getCurrentBlock");
+const latestTime = require("../utils/latestTime");
+const expectThrow = require("../utils/expectThrow");
+const randomId = require("../utils/randomId");
+const AccurateEnough = require("../utils/AccurateEnough");
 const Purpose = artifacts.require("Purpose");
 const DUBI = artifacts.require("DUBI");
 const Hodler = artifacts.require("Hodler");

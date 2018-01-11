@@ -1,6 +1,6 @@
 const Purpose = artifacts.require("Purpose");
 const Crowdsale = artifacts.require("Crowdsale");
-const expectThrow = require("./helpers/expectThrow");
+const expectThrow = require("../utils/expectThrow");
 
 contract("Crowdsale", function(accounts) {
   const [owner, investor, wallet1, wallet2] = accounts;

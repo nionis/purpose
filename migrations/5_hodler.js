@@ -1,4 +1,4 @@
-const Deploy = require("./helpers/Deploy");
+const Deploy = require("../utils/Deploy");
 const Keys = require("../keys");
 const Hodler = artifacts.require("./Hodler.sol");
 

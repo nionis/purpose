@@ -1,6 +1,6 @@
-const { increaseTime, duration } = require("./helpers/increaseTime");
-const expectThrow = require("./helpers/expectThrow");
-const randomId = require("./helpers/randomId");
+const { increaseTime, duration } = require("../utils/increaseTime");
+const expectThrow = require("../utils/expectThrow");
+const randomId = require("../utils/randomId");
 const Purpose = artifacts.require("Purpose");
 const DUBI = artifacts.require("DUBI");
 const Hodler = artifacts.require("Hodler");
