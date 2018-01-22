@@ -1,2 +1,9 @@
 node_modules/
 keys.js
+
+# this fails on windows
+# but used by flattener
+truffle.js
+
+# flattener dir
+flat
