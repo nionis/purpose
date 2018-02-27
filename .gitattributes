@@ -1,0 +1,6 @@
+# .sol means solidity
+*.sol linguist-language=Solidity
+
+# ignore all files except stuff in contracts/*
+* linguist-vendored
+contracts/* linguist-vendored=false
