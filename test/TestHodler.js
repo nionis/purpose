@@ -28,23 +28,13 @@ contract("Hodler", function(accounts) {
 
     accurateSeconds(duration.months(diff));
   };
-  const isOwnerMonthsAcurrateEnough = (months, dubiAmount, purposeAmount) => {
-    if (purposeAmount.equals(0)) return 0;
-
-    const _months = new web3.BigNumber(10000)
-      .times(dubiAmount)
-      .times(3)
-      .div(purposeAmount.mul(5));
-    const diff = _months.minus(months);
-
-    accurateSeconds(duration.months(diff));
-  };
 
   beforeEach(async function() {
-    purpose = await Purpose.new(owner);
+    purpose = await Purpose.new();
     dubi = await DUBI.new();
     hodler = await Hodler.new(purpose.address, dubi.address);
 
+    await purpose.mint(owner, new web3.BigNumber(web3.toWei(1e9, "ether")));
     await purpose.transfer(user, purposeInput);
     await purpose.adminAddRole(hodler.address, "transfer");
     await dubi.adminAddRole(hodler.address, "mint");
@@ -60,7 +50,7 @@ contract("Hodler", function(accounts) {
     const id = randomId();
     const months = 3;
 
-    await expectThrow(hodler.hodl(id, 1000, months));
+    await expectThrow(hodler.hodl(id, 1, months));
   });
 
   it("create item twice", async function() {
@@ -78,7 +68,6 @@ contract("Hodler", function(accounts) {
     const prpsBalanceBefore = await purpose.balanceOf(user);
     const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
     const dubiBalanceBefore = await dubi.balanceOf(user);
-    const ownerDubiBalanceBefore = await dubi.balanceOf(owner);
 
     await hodler.hodl(id, purposeInput, months, {
       from: user
@@ -87,7 +76,6 @@ contract("Hodler", function(accounts) {
     const prpsBalanceAfter = await purpose.balanceOf(user);
     const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
     const dubiBalanceAfter = await dubi.balanceOf(user);
-    const ownerDubiBalanceAfter = await dubi.balanceOf(owner);
 
     assert.isTrue(
       prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
@@ -96,7 +84,6 @@ contract("Hodler", function(accounts) {
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
     isMonthsAcurrateEnough(months, dubiBalanceAfter, purposeInput);
-    isOwnerMonthsAcurrateEnough(months, ownerDubiBalanceAfter, purposeInput);
   });
 
   it("amounts, 6 months", async function() {
@@ -106,7 +93,6 @@ contract("Hodler", function(accounts) {
     const prpsBalanceBefore = await purpose.balanceOf(user);
     const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
     const dubiBalanceBefore = await dubi.balanceOf(user);
-    const ownerDubiBalanceBefore = await dubi.balanceOf(owner);
 
     await hodler.hodl(id, purposeInput, months, {
       from: user
@@ -115,7 +101,6 @@ contract("Hodler", function(accounts) {
     const prpsBalanceAfter = await purpose.balanceOf(user);
     const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
     const dubiBalanceAfter = await dubi.balanceOf(user);
-    const ownerDubiBalanceAfter = await dubi.balanceOf(owner);
 
     assert.isTrue(
       prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
@@ -124,7 +109,6 @@ contract("Hodler", function(accounts) {
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
     isMonthsAcurrateEnough(months, dubiBalanceAfter, purposeInput);
-    isOwnerMonthsAcurrateEnough(months, ownerDubiBalanceAfter, purposeInput);
   });
 
   it("amounts, 12 months", async function() {
@@ -134,7 +118,6 @@ contract("Hodler", function(accounts) {
     const prpsBalanceBefore = await purpose.balanceOf(user);
     const prpsBalanceHodlerBefore = await purpose.balanceOf(hodler.address);
     const dubiBalanceBefore = await dubi.balanceOf(user);
-    const ownerDubiBalanceBefore = await dubi.balanceOf(owner);
 
     await hodler.hodl(id, purposeInput, months, {
       from: user
@@ -143,7 +126,6 @@ contract("Hodler", function(accounts) {
     const prpsBalanceAfter = await purpose.balanceOf(user);
     const prpsBalanceHodlerAfter = await purpose.balanceOf(hodler.address);
     const dubiBalanceAfter = await dubi.balanceOf(user);
-    const ownerDubiBalanceAfter = await dubi.balanceOf(owner);
 
     assert.isTrue(
       prpsBalanceBefore.minus(purposeInput).equals(prpsBalanceAfter)
@@ -152,7 +134,6 @@ contract("Hodler", function(accounts) {
       prpsBalanceHodlerBefore.plus(purposeInput).equals(prpsBalanceHodlerAfter)
     );
     isMonthsAcurrateEnough(months, dubiBalanceAfter, purposeInput);
-    isOwnerMonthsAcurrateEnough(months, ownerDubiBalanceAfter, purposeInput);
   });
 
   it("getItem", async function() {

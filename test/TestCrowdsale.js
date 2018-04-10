@@ -22,7 +22,7 @@ contract("Crowdsale", function(accounts) {
   };
 
   beforeEach(async function() {
-    purpose = await Purpose.new(owner);
+    purpose = await Purpose.new();
     crowdsale = await Crowdsale.new(
       wallet1,
       supplier,
@@ -32,6 +32,7 @@ contract("Crowdsale", function(accounts) {
     );
 
     // allow crowdsale to access suppliers tokens
+    await purpose.mint(supplier, new web3.BigNumber(web3.toWei(1e9, "ether")));
     const balanceOfSupplier = await purpose.balanceOf(supplier);
     await purpose.approve(crowdsale.address, balanceOfSupplier);
   });

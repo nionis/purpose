@@ -1,9 +1,1 @@
-{
-  "Migrations": "0xd4cc83597476784632af2d48cefbe82d69896642",
-  "Purpose": "0x7641b2Ca9DDD58adDf6e3381c1F994Aac5f1A32f",
-  "DUBI": "0xd4cffeef10f60eca581b5e1146b5aca4194a4c3b",
-  "Burner": "0x7d5a7a974ea07bfedddc2a15297189089be071b6",
-  "Hodler": "0x7aed8adb665d649cc83d8e002147cee65f88fbb0",
-  "Crowdsale": "0x2d3691fe85d6400957a3356e0afdc17ea6d1de09",
-  "HodlFor": "0x275DA025fa3216b15583C565cf77Cc482481e4ad"
-}
+{}

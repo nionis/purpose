@@ -2,7 +2,7 @@
 
 const path = require("path");
 const fs = require("fs");
-const buildPath = path.join(__dirname, "..", "..", "build");
+const buildPath = path.join(__dirname, "..", "build");
 
 const Deploy = (deployer, network) => async (contract, ...args) => {
   await deployer.deploy(contract, ...args);

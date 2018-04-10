@@ -10,7 +10,7 @@ const start = async (deployer, network, accounts) => {
   const [owner] = accounts;
 
   // --> deploy purpose
-  const purpose = await deploy(Purpose, keys.athene);
+  const purpose = await deploy(Purpose);
 };
 
 module.exports = start;

@@ -15,7 +15,7 @@ contract("HodlFor", function(accounts) {
 	let hodlFor;
 
 	beforeEach(async function() {
-		purpose = await Purpose.new(owner);
+		purpose = await Purpose.new();
 		dubi = await DUBI.new();
 		hodler = await Hodler.new(purpose.address, dubi.address);
 		hodlFor = await HodlFor.new(purpose.address, dubi.address, hodler.address);
@@ -25,6 +25,7 @@ contract("HodlFor", function(accounts) {
 		await dubi.adminAddRole(hodler.address, "mint");
 
 		// give purpose to creator
+		await purpose.mint(owner, new web3.BigNumber(web3.toWei(1e9, "ether")));
 		await purpose.transfer(creator, purposeInput);
 
 		// approve hodlFor to use creators tokens
