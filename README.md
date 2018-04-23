@@ -16,7 +16,3 @@ This repository contains purpose related contracts developed by The Singularity 
 ![alt text](https://i.imgur.com/3Pu1kCe.png "Flow waves hand")
 
 For more details go to the [wiki page](https://github.com/nionis/purpose/wiki)
-
-## To do:
-
-* ~~run on eth testnet~~ ([participate](https://github.com/nionis/purpose/wiki/Testnet))
