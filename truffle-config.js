@@ -23,8 +23,14 @@ module.exports = {
         `https://mainnet.infura.io/${mainnetKeys.infuraKey}`
       ),
       gas: "7000000",
-      gasPrice: "50000000000",
+      gasPrice: "2000000000",
       network_id: 1
+    }
+  },
+  solc: {
+    optimizer: {
+      enabled: true,
+      runs: 200
     }
   }
 };

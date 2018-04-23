@@ -1,1 +1,8 @@
-{}
+{
+  "Migrations": "0x8412299565d089a62ae308b5cfa1db682e050919",
+  "Purpose": "0xd94f2778e2b3913c53637ae60647598be588c570",
+  "DUBI": "0x9c6fa42209169bcea032e401188a6fc3e9c9f59c",
+  "Hodler": "0x77d0c79c83b3a14092d5c0c12145645cc9cedc75",
+  "Crowdsale": "0x3db25de1b9b26f267c1a39504a0d648e8662c722",
+  "HodlFor": "0x5d97a4564eb4d50c3b1fb4e09687c419124841ac"
+}

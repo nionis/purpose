@@ -509,7 +509,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1521,
+          "SourceUnit": 1529,
           "absolutePath": "zeppelin-solidity/contracts/token/StandardToken.sol",
           "file": "zeppelin-solidity/contracts/token/StandardToken.sol",
           "scope": 96,
@@ -524,7 +524,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1046,
+          "SourceUnit": 1054,
           "absolutePath": "zeppelin-solidity/contracts/token/BurnableToken.sol",
           "file": "zeppelin-solidity/contracts/token/BurnableToken.sol",
           "scope": 96,
@@ -539,7 +539,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 835,
+          "SourceUnit": 843,
           "absolutePath": "zeppelin-solidity/contracts/ownership/rbac/RBAC.sol",
           "file": "zeppelin-solidity/contracts/ownership/rbac/RBAC.sol",
           "scope": 96,
@@ -555,24 +555,24 @@
       {
         "attributes": {
           "contractDependencies": [
-            834,
-            990,
-            1045,
-            1088,
-            1117,
-            1520
+            842,
+            998,
+            1053,
+            1096,
+            1125,
+            1528
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             95,
-            834,
-            1045,
-            1520,
-            990,
-            1088,
-            1117
+            842,
+            1053,
+            1528,
+            998,
+            1096,
+            1125
           ],
           "name": "DUBI",
           "scope": 96
@@ -589,7 +589,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "StandardToken",
-                  "referencedDeclaration": 1520,
+                  "referencedDeclaration": 1528,
                   "type": "contract StandardToken"
                 },
                 "id": 5,
@@ -612,7 +612,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "BurnableToken",
-                  "referencedDeclaration": 1045,
+                  "referencedDeclaration": 1053,
                   "type": "contract BurnableToken"
                 },
                 "id": 7,
@@ -635,7 +635,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "RBAC",
-                  "referencedDeclaration": 834,
+                  "referencedDeclaration": 842,
                   "type": "contract RBAC"
                 },
                 "id": 9,
@@ -946,7 +946,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1100,
                               "type": "uint256",
                               "value": "totalSupply"
                             },
@@ -1104,7 +1104,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 823,
+                      "referencedDeclaration": 831,
                       "type": "modifier (string memory)",
                       "value": "onlyRole"
                     },
@@ -1161,7 +1161,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1535,
+                              "referencedDeclaration": 1543,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1297,7 +1297,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1535,
+                              "referencedDeclaration": 1543,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1385,7 +1385,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1100,
                               "type": "uint256",
                               "value": "totalSupply"
                             },
@@ -1421,7 +1421,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "add",
-                                  "referencedDeclaration": 617,
+                                  "referencedDeclaration": 625,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -1431,7 +1431,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1092,
+                                      "referencedDeclaration": 1100,
                                       "type": "uint256",
                                       "value": "totalSupply"
                                     },
@@ -1502,7 +1502,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 917,
+                                  "referencedDeclaration": 925,
                                   "type": "mapping(address => uint256)",
                                   "value": "balances"
                                 },
@@ -1557,7 +1557,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "add",
-                                  "referencedDeclaration": 617,
+                                  "referencedDeclaration": 625,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -1577,7 +1577,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 917,
+                                          "referencedDeclaration": 925,
                                           "type": "mapping(address => uint256)",
                                           "value": "balances"
                                         },
@@ -1752,7 +1752,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1116,
+                              "referencedDeclaration": 1124,
                               "type": "function (address,address,uint256)",
                               "value": "Transfer"
                             },
@@ -1867,6 +1867,11 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x9c6fa42209169bcea032e401188a6fc3e9c9f59c"
+    },
     "4": {
       "events": {},
       "links": {},
@@ -1874,5 +1879,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-04-10T12:58:48.984Z"
+  "updatedAt": "2018-04-23T13:39:54.718Z"
 }
