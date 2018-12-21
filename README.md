@@ -1,7 +1,3 @@
-# Introduction
-
-This repository contains purpose related contracts developed by The Singularity Group team.
-
 ## Contracts:
 
 * Purpose
